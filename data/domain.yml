@@ -1,0 +1,64 @@
+slots:
+  activity:
+    type: text
+  datetime:
+    type: text
+  relativedate:
+    type: text
+  dateperiod:
+    type: text
+  location:
+    type: text
+  friends:
+    type: list
+  matches:
+    type: list
+
+intents:
+  - greet
+  - goodbye
+  - search_event
+
+entities:
+  - activity
+  - dateperiod
+  - datetime
+  - firstname
+  - location
+  - relativedate
+
+templates:
+  utter_ask_howcanhelp:
+    - 'Hallo willst du etwas unternehmen? Frag mit nach einer Veranstaltung!'
+  utter_goodbye:
+    - 'Bis später!'
+    - 'Tschüss!'
+  utter_ask_location:
+    - 'Ok du willst ins {activity} und wo?'
+    - 'Alles klar. An welchem Ort?'
+    - '{activity}. Und wo?'
+  utter_ask_time:
+    - 'Wann?'
+    - 'An welchem Datum?'
+  utter_ask_activity:
+    - 'Ok du willst etwas unternehmen und was?'
+    - 'Was würdest du gerne machen? Kino, Theater oder etwas anderes?'
+  utter_ask_invite:
+    - 'Willst du jemand mitnehmen?'
+    - 'Willst du noch jemanden einladen?'
+  utter_confirm:
+    - 'Ok habe ich gebucht.'
+  utter_ask_selection:
+    - text: 'Tippe einfach eine Zahl ein'
+      buttons:
+      - title: ""
+actions:
+  - utter_ask_howcanhelp
+  - utter_goodbye
+  - utter_ask_location
+  - utter_ask_time
+  - utter_ask_activity
+  - utter_ask_invite
+  - utter_confirm
+  - actions.ActionSuggest
+  - actions.ActionSearchEvents
