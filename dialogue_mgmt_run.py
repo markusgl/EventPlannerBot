@@ -12,7 +12,7 @@ from rasa_core.channels.telegram import TelegramInput
 from interpreter import Interpreter
 
 logger = logging.getLogger(__name__)
-TELEGRAM_API_KEY = '590846089:AAHppWEHq_AlVPjCfDLP8nB4cMNbL6scPws'
+TELEGRAM_API_KEY = ''
 
 
 def run_cli_bot(serve_forever=True):

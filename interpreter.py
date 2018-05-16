@@ -10,7 +10,7 @@ class Interpreter(RasaNLUInterpreter):
 
     def __init__(self):
         #super(Interpreter, self)__init__()
-        self.subscription_key = "c03226c12ccb487ca17ab62ccec8dc06"
+        self.subscription_key = ""
 
     def _send_api_request(self, query):
         """
