@@ -10,7 +10,7 @@ class Interpreter(RasaNLUInterpreter):
 
     def __init__(self):
         #super(Interpreter, self)__init__()
-        self.subscription_key = ""
+        self.subscription_key = "c03226c12ccb487ca17ab62ccec8dc06"
 
     def _send_api_request(self, query):
         """
@@ -27,7 +27,7 @@ class Interpreter(RasaNLUInterpreter):
                   }
 
         response = requests.get(
-            "https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/...",
+            "https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/10a19e89-f320-4eeb-a7ee-e2aa9fafe755",
             params=params)
         #print(response.url)
         print("LUIS response: %s" % response.content)

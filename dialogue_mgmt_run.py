@@ -6,32 +6,16 @@ from __future__ import unicode_literals
 import logging
 
 from rasa_core.agent import Agent
+from rasa_core.channels import HttpInputChannel
 from rasa_core.channels.console import ConsoleInputChannel
-from rasa_core.policies.keras_policy import KerasPolicy
-from rasa_core.policies.memoization import MemoizationPolicy
+from rasa_core.channels.telegram import TelegramInput
 from interpreter import Interpreter
 
 logger = logging.getLogger(__name__)
+TELEGRAM_API_KEY = '590846089:AAHppWEHq_AlVPjCfDLP8nB4cMNbL6scPws'
 
-def train_dialogue(domain_file='./data/domain.yml',
-                    model_path='./models/dialogue',
-                    training_data_file = './data/stories.md'):
-    
-    agent = Agent(domain_file, policies=[MemoizationPolicy(), KerasPolicy()])
-    agent.train(
-                training_data_file,
-                max_history = 3,
-                epochs = 300,
-                batch_size = 50,
-                validation_split = 0.2,
-                augmentation_factor = 50
-                )
 
-    agent.persist(model_path)
-    return agent
-
-def run_event_bot(serve_forever=True):
-
+def run_cli_bot(serve_forever=True):
     interpreter = Interpreter()
     agent = Agent.load('./models/dialogue', interpreter)
 
@@ -41,6 +25,18 @@ def run_event_bot(serve_forever=True):
     return agent
 
 
+def run_telegram_bot():
+    interpreter = Interpreter()
+    agent = Agent.load('./models/dialogue', interpreter)
+
+    input_channel = (TelegramInput(access_token=TELEGRAM_API_KEY,
+                                   verify='event123_bot',
+                                   webhook_url='3f667559.ngrok.io/app/webhoook',
+                                   debug_mode=True))
+
+    agent.handle_channel(HttpInputChannel(5004, '/app', input_channel))
+
+
 if __name__ == '__main__':
-    #train_dialogue()
-    run_event_bot()
+    #run_cli_bot()
+    run_telegram_bot()
