@@ -18,6 +18,7 @@ intents:
   - greet
   - goodbye
   - search_event
+  - selection
 
 entities:
   - activity
@@ -62,3 +63,4 @@ actions:
   - utter_confirm
   - actions.ActionSuggest
   - actions.ActionSearchEvents
+  - actions.ActionClearSlots

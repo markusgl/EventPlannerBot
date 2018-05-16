@@ -7,13 +7,14 @@
     - utter_ask_location
 * search_event{"location": "berlin"}
     - utter_ask_time
-* search_event{"datetime": "morgen"}#
+* search_event{"datetime": "morgen"}
     - action_search_events
     - action_suggest
 * selection{"number":1}
     - utter_ask_invite
 * goodbye
     - utter_goodbye
+    - action_clear_slots
     
 ## story 1 no location, no time
 * greet
@@ -29,6 +30,7 @@
     - utter_ask_invite
 * goodbye
     - utter_goodbye
+    - action_clear_slots
         
 ## story 2 no time
 * greet
@@ -42,6 +44,7 @@
     - utter_ask_invite
 * goodbye
     - utter_goodbye
+    - action_clear_slots
     
 ## story 3 
 * greet
@@ -53,6 +56,7 @@
     - utter_ask_invite
 * goodbye
     - utter_goodbye
+    - action_clear_slots
     
     
 ## story 2.0 no activity, no location, no relativedate
@@ -71,6 +75,7 @@
     - utter_ask_invite
 * goodbye
     - utter_goodbye
+    - action_clear_slots
     
 ## story 2.1 no location, no time
 * greet
@@ -86,6 +91,7 @@
     - utter_ask_invite
 * goodbye
     - utter_goodbye
+    - action_clear_slots
         
 ## story 2.2 no time
 * greet
@@ -99,6 +105,7 @@
     - utter_ask_invite
 * goodbye
     - utter_goodbye
+    - action_clear_slots
     
 ## story 2.3 
 * greet
@@ -110,6 +117,7 @@
     - utter_ask_invite
 * goodbye
     - utter_goodbye
+    - action_clear_slots
 
 ## story 2.3 
 * greet
@@ -123,6 +131,7 @@
     - utter_ask_invite
 * goodbye
     - utter_goodbye
+    - action_clear_slots
     
     
 ## story 3.0 no activity, no location, no dateperiod
@@ -141,6 +150,7 @@
     - utter_ask_invite
 * goodbye
     - utter_goodbye
+    - action_clear_slots
     
 ## story 3.1 no location, no time
 * greet
@@ -156,6 +166,7 @@
     - utter_ask_invite
 * goodbye
     - utter_goodbye
+    - action_clear_slots
         
 ## story 3.2 no time
 * greet
@@ -169,6 +180,7 @@
     - utter_ask_invite
 * goodbye
     - utter_goodbye
+    - action_clear_slots
     
 ## story 3.3 
 * greet
@@ -180,3 +192,4 @@
     - utter_ask_invite
 * goodbye
     - utter_goodbye
+    - action_clear_slots

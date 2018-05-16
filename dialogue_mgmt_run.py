@@ -31,12 +31,12 @@ def run_telegram_bot():
 
     input_channel = (TelegramInput(access_token=TELEGRAM_API_KEY,
                                    verify='event123_bot',
-                                   webhook_url='3f667559.ngrok.io/app/webhoook',
+                                   webhook_url='080fdcb5.ngrok.io/app/webhoook',
                                    debug_mode=True))
 
     agent.handle_channel(HttpInputChannel(5004, '/app', input_channel))
 
 
 if __name__ == '__main__':
-    #run_cli_bot()
-    run_telegram_bot()
+    run_cli_bot()
+    #run_telegram_bot()

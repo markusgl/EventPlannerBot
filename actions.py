@@ -4,7 +4,7 @@ from __future__ import division
 from __future__ import unicode_literals
 
 from rasa_core.actions.action import Action
-from rasa_core.events import SlotSet
+from rasa_core.events import SlotSet, AllSlotsReset
 
 
 class ActionSearchFriends(Action):
@@ -17,6 +17,7 @@ class ActionSearchFriends(Action):
         friends = ["Maria", "Eva", "Daniel"]
 
         return [SlotSet("friends", friends)]
+
 
 class ActionSearchEvents(Action):
     def name(self):
@@ -55,6 +56,19 @@ class ActionSuggest(Action):
             dispatcher.utter_message(str(count) + " " + match)
             count += 1
         dispatcher.utter_message("Wie ist deine Wahl?")
-        dispatcher.utter_button_message("Tippe einfach die entprechende Zahl ein", buttons=[{"1":"eins", "2":"zwei", "3":"drei"}])
+        dispatcher.utter_button_message("Tippe die entprechende Zahl ein", buttons=[{"1":"eins", "2":"zwei", "3":"drei"}])
 
         return []
+
+
+class ActionClearSlots(Action):
+    def name(self):
+        return 'action_clear_slots'
+
+    def run(self, dispatcher, tracker, domain):
+        tracker.clear_follow_up_action()
+
+        print("Current slot-values %s"%tracker.current_slot_values())
+        print("Current state %s"%tracker.current_state())
+
+        return [AllSlotsReset()]
