@@ -10,7 +10,9 @@ class Interpreter(RasaNLUInterpreter):
 
     def __init__(self):
         #super(Interpreter, self)__init__()
-        self.subscription_key = ""
+        with open('keys.json') as f:
+            data = json.load(f)
+        self.subscription_key = data['luis-subscription-key']
 
     def _send_api_request(self, query):
         """

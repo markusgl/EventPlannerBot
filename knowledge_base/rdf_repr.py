@@ -2,7 +2,6 @@ from rdflib import Graph, BNode, RDF, Literal, URIRef
 from rdflib.namespace import FOAF
 
 graph = Graph()
-
 user = BNode()
 
 graph.add((user, RDF.type, FOAF.Person))

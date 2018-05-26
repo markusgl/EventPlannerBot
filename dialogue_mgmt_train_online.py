@@ -33,5 +33,5 @@ def run_eventbot_online(input_channel, interpreter,
 
 if __name__ == '__main__':
     logging.basicConfig(level="INFO")
-    nlu_interpreter = Interpreter()
-    run_eventbot_online(ConsoleInputChannel(), nlu_interpreter)
+    luis_interpreter = Interpreter()
+    run_eventbot_online(ConsoleInputChannel(), luis_interpreter)

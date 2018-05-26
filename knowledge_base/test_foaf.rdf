@@ -3,9 +3,9 @@
   xmlns:ns1="http://xmlns.com/foaf/0.1/"
   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 >
-  <ns1:Person rdf:nodeID="Ndb82413258ef4be8beea9e8f53a029a5">
+  <ns1:Person rdf:nodeID="N113486aa2c274cf2a3fe882bec5ec695">
+    <ns1:name>Max Mustermann</ns1:name>
     <ns1:mbox rdf:resource="mailto:max@example.org"/>
     <ns1:nick xml:lang="de">user</ns1:nick>
-    <ns1:name>Max Mustermann</ns1:name>
   </ns1:Person>
 </rdf:RDF>

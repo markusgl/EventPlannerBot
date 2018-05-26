@@ -4,6 +4,7 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 import logging
+import json
 
 from rasa_core.agent import Agent
 from rasa_core.channels import HttpInputChannel
@@ -12,7 +13,7 @@ from rasa_core.channels.telegram import TelegramInput
 from interpreter import Interpreter
 
 logger = logging.getLogger(__name__)
-TELEGRAM_API_KEY = ''
+
 
 
 def run_cli_bot(serve_forever=True):
@@ -26,12 +27,16 @@ def run_cli_bot(serve_forever=True):
 
 
 def run_telegram_bot():
+    with open('keys.json') as f:
+        data = json.load(f)
+    telegram_api_key = data['telegram-api-key']
+
     interpreter = Interpreter()
     agent = Agent.load('./models/dialogue', interpreter)
 
-    input_channel = (TelegramInput(access_token=TELEGRAM_API_KEY,
+    input_channel = (TelegramInput(access_token=telegram_api_key,
                                    verify='event123_bot',
-                                   webhook_url='080fdcb5.ngrok.io/app/webhoook',
+                                   webhook_url='cdc4acac.ngrok.io/app/webhoook',
                                    debug_mode=True))
 
     agent.handle_channel(HttpInputChannel(5004, '/app', input_channel))
