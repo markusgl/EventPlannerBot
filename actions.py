@@ -3,20 +3,42 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import unicode_literals
 
+from knowledge_base.neo_4_j_graph import KnowledgeGraph
+
 from rasa_core.actions.action import Action
 from rasa_core.events import SlotSet, AllSlotsReset, Restarted
 
 
-class ActionSearchFriends(Action):
+class ActionSearchContact(Action):
     def name(self):
-        return 'action_search_people'
+        return 'action_search_contact'
 
     def run(self, dispatcher, tracker, domain):
         # TODO call knowledge base
+        kg = KnowledgeGraph()
+        contact_name = tracker.get_slot('contactname')
+        relation_ship = tracker.get_slot('relationship')
+        #print(contact_name)
+        #print(relation_ship)
 
-        friends = ["Maria", "Eva", "Daniel"]
+        if contact_name:
+            relationship = kg.search_relationship_by_contactname(contact_name)
+            if relationship is None:
+                dispatcher.utter_message("Ich konnte leider niemanden als " + relation_ship + " finden.")
+            else:
+                SlotSet("relationship", relationship)
+                dispatcher.utter_message("Deinen "+relationship+" "+contact_name+"?")
+        elif relation_ship:
+            contact = kg.search_contactname_by_relationship(relation_ship)
+            if contact is None:
+                dispatcher.utter_message("Ich konnte leider keinen Kontakt mit dem Namen "+ contact_name + " finden.")
+            else:
+                SlotSet("contactname", contact)
+                dispatcher.utter_message("Meinst du "+contact+"?")
+        else:
+            dispatcher.utter_message("Leider hab ich dich nicht verstanden. Wen willst du mitnehmen?")
 
-        return [SlotSet("friends", friends)]
+        return []
 
 
 class ActionSearchEvents(Action):

@@ -9,8 +9,10 @@ slots:
     type: text
   location:
     type: text
-  friends:
-    type: list
+  contactname:
+    type: text
+  relationship:
+    type: text
   matches:
     type: list
 
@@ -19,6 +21,7 @@ intents:
   - goodbye
   - search_event
   - selection
+  - contact_selection
 
 entities:
   - activity
@@ -27,6 +30,7 @@ entities:
   - firstname
   - location
   - relativedate
+  - relationship
 
 templates:
   utter_ask_howcanhelp:
@@ -47,12 +51,15 @@ templates:
   utter_ask_invite:
     - 'Willst du jemand mitnehmen?'
     - 'Willst du noch jemanden einladen?'
+    - 'Wen willst du mitnehmen?'
   utter_confirm:
     - 'Ok habe ich gebucht.'
   utter_ask_selection:
     - text: 'Tippe einfach eine Zahl ein'
       buttons:
       - title: ""
+  utter_confirm_contact_invitation:
+    - 'Ok ich haben den Kontakt eingeladen'
 actions:
   - utter_ask_howcanhelp
   - utter_goodbye
@@ -61,6 +68,8 @@ actions:
   - utter_ask_activity
   - utter_ask_invite
   - utter_confirm
+  - utter_confirm_contact_invitation
   - actions.ActionSuggest
   - actions.ActionSearchEvents
   - actions.ActionClearSlots
+  - actions.ActionSearchContact

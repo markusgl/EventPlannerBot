@@ -33,6 +33,7 @@ class Interpreter(RasaNLUInterpreter):
             params=params)
         #print(response.url)
         #print("LUIS response: %s" % response.content)
+
         return response.content
 
 
@@ -42,7 +43,7 @@ class Interpreter(RasaNLUInterpreter):
         :param message: message from user
         :return: dict following Rasa-NLU format
         """
-        resp = json.loads(self._send_api_request(message))
+        resp = json.loads((self._send_api_request(message)).decode('utf-8'))
 
         nlu_response = NLUResponse()
         nlu_response.text = message

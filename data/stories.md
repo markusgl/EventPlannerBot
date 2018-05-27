@@ -12,6 +12,7 @@
     - action_suggest
 * selection{"number":1}
     - utter_ask_invite
+    - action_search_contact
 * goodbye
     - utter_goodbye
     - action_clear_slots
@@ -28,6 +29,7 @@
     - action_suggest
 * selection{"number":1}
     - utter_ask_invite
+    - action_search_contact
 * goodbye
     - utter_goodbye
     - action_clear_slots
@@ -42,6 +44,7 @@
     - action_suggest
 * selection{"number":1}
     - utter_ask_invite
+    - action_search_contact
 * goodbye
     - utter_goodbye
     - action_clear_slots
@@ -54,6 +57,7 @@
     - action_suggest
 * selection{"number":1}
     - utter_ask_invite
+    - action_search_contact
 * goodbye
     - utter_goodbye
     - action_clear_slots
@@ -73,6 +77,7 @@
     - action_suggest
 * selection{"number":1}
     - utter_ask_invite
+    - action_search_contact
 * goodbye
     - utter_goodbye
     - action_clear_slots
@@ -249,4 +254,184 @@
     - slot{"relativedate": "heute"}
 * goodbye
     - action_clear_slots
+    - utter_goodbye
+
+## Generated Story -4546596856385291886
+* search_event{"relativedate": "heute"}
+    - slot{"relativedate": "heute"}
+    - utter_ask_activity
+* search_event{"activity": "kino"}
+    - slot{"activity": "kino"}
+    - utter_ask_location
+* search_event{"location": "n\u00fcrnberg"}
+    - slot{"location": "n\u00fcrnberg"}
+    - action_search_events
+    - slot{"matches": ["Avengers - Infinity War", "Ready Player One", "Black Panther"]}
+    - action_suggest
+* selection{"builtin.datetime": "1", "builtin.number": "1"}
+    - utter_ask_invite
+* contact_selection
+    - action_search_contact
+* contact_selection
+    - export
+## Generated Story -9090375821377452847
+* search_event{"relativedate": "heute"}
+    - slot{"relativedate": "heute"}
+    - utter_ask_location
+* search_event{"location": "n\u00fcrnberg"}
+    - slot{"location": "n\u00fcrnberg"}
+    - utter_ask_activity
+* search_event{"activity": "kino"}
+    - slot{"activity": "kino"}
+    - action_search_events
+    - slot{"matches": ["Avengers - Infinity War", "Ready Player One", "Black Panther"]}
+    - action_suggest
+* selection{"builtin.number": "1", "builtin.datetime": "1"}
+    - utter_ask_invite
+* contact_selection
+    - action_search_contact
+* contact_selection{"builtin.datetime": "ja genau"}
+    - utter_goodbye
+    - export
+## Generated Story -4546596856385291886
+* search_event{"relativedate": "heute"}
+    - slot{"relativedate": "heute"}
+    - utter_ask_activity
+* search_event{"activity": "kino"}
+    - slot{"activity": "kino"}
+    - utter_ask_location
+* search_event{"location": "n\u00fcrnberg"}
+    - slot{"location": "n\u00fcrnberg"}
+    - action_search_events
+    - slot{"matches": ["Avengers - Infinity War", "Ready Player One", "Black Panther"]}
+    - action_suggest
+* selection{"builtin.datetime": "1", "builtin.number": "1"}
+    - utter_ask_invite
+* contact_selection
+    - action_search_contact
+* contact_selection
+    - export
+## Generated Story -9090375821377452847
+* search_event{"relativedate": "heute"}
+    - slot{"relativedate": "heute"}
+    - utter_ask_location
+* search_event{"location": "n\u00fcrnberg"}
+    - slot{"location": "n\u00fcrnberg"}
+    - utter_ask_activity
+* search_event{"activity": "kino"}
+    - slot{"activity": "kino"}
+    - action_search_events
+    - slot{"matches": ["Avengers - Infinity War", "Ready Player One", "Black Panther"]}
+    - action_suggest
+* selection{"builtin.number": "1", "builtin.datetime": "1"}
+    - utter_ask_invite
+* contact_selection
+    - action_search_contact
+* contact_selection{"builtin.datetime": "ja genau"}
+    - utter_goodbye
+    - export
+## Generated Story -8281301799106823185
+* contact_selection{"builtin.datetime": "ja genau"}
+    - utter_goodbye
+    - export
+## Generated Story -6011619657283768675
+    - action_search_contact
+* contact_selection
+    - export
+## Generated Story 4439219233475235728
+* contact_selection
+    - export
+## Generated Story -4584063658579183199
+    - utter_goodbye
+    - export
+## Generated Story -8281301799106823185
+* contact_selection{"builtin.datetime": "ja genau"}
+    - utter_goodbye
+    - export
+## Generated Story -6011619657283768675
+    - action_search_contact
+* contact_selection
+    - export
+## Generated Story 4439219233475235728
+* contact_selection
+    - export
+## Generated Story -4584063658579183199
+    - utter_goodbye
+    - export
+## Generated Story -8281301799106823185
+* contact_selection{"builtin.datetime": "ja genau"}
+    - utter_goodbye
+    - export
+## Generated Story -6011619657283768675
+    - action_search_contact
+* contact_selection
+    - export
+## Generated Story -4584063658579183199
+    - utter_goodbye
+    - export
+## Generated Story 4439219233475235728
+* contact_selection
+    - export
+## Generated Story -1264619619890341108
+* search_event{"relativedate": "heute"}
+    - slot{"relativedate": "heute"}
+    - utter_ask_location
+* search_event{"location": "berlin"}
+    - slot{"location": "berlin"}
+    - action_search_events
+    - slot{"matches": ["Avengers - Infinity War", "Ready Player One", "Black Panther"]}
+    - action_suggest
+* selection{"builtin.datetime": "3", "builtin.number": "3"}
+    - utter_ask_invite
+* contact_selection
+    - action_search_contact
+
+## Generated Story 8147637031944812160
+* search_event{"location": "berlin", "relativedate": "heute"}
+    - slot{"location": "berlin"}
+    - slot{"relativedate": "heute"}
+    - action_search_events
+    - slot{"matches": ["Avengers - Infinity War", "Ready Player One", "Black Panther"]}
+    - action_suggest
+* selection{"builtin.number": "2"}
+    - utter_ask_invite
+* contact_selection
+    - action_search_contact
+* goodbye
+    - export
+## Generated Story 4392702703658739764
+* search_event{"relativedate": "heute"}
+    - slot{"relativedate": "heute"}
+    - utter_ask_location
+* search_event{"location": "berlin"}
+    - slot{"location": "berlin"}
+    - action_search_events
+    - slot{"matches": ["Avengers - Infinity War", "Ready Player One", "Black Panther"]}
+    - action_suggest
+* selection{"builtin.number": "2"}
+    - utter_ask_invite
+* contact_selection
+    - action_search_contact
+* contact_selection{"relationship": "schwester"}
+    - slot{"relationship": "schwester"}
+    - action_search_contact
+* contact_selection
+    - utter_confirm
+
+## Generated Story -3282871180467400832
+* search_event{"relativedate": "heute", "activity": "kino", "location": "berlin"}
+    - slot{"activity": "kino"}
+    - slot{"location": "berlin"}
+    - slot{"relativedate": "heute"}
+    - action_search_events
+    - slot{"matches": ["Avengers - Infinity War", "Ready Player One", "Black Panther"]}
+    - action_suggest
+* selection{"builtin.number": "3", "builtin.datetime": "3"}
+    - utter_ask_invite
+* contact_selection{"relationship": "schwester"}
+    - slot{"relationship": "schwester"}
+    - action_search_contact
+* contact_selection
+    - utter_confirm_contact_invitation
+* goodbye
     - utter_goodbye
