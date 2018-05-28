@@ -1,5 +1,6 @@
 from neo4jrestclient.client import GraphDatabase
 from neo4jrestclient import client
+from neo4jrestclient.exceptions import NotFoundError
 
 
 class KnowledgeGraph:
@@ -16,7 +17,7 @@ class KnowledgeGraph:
 
         if user1:
             self.central_user = self.db.nodes.get(name="CentralUser", key="0")
-            return
+            #return
         else:
             user = self.db.labels.create("User") # Type
             self.central_user = self.db.nodes.create(name="CentralUser", key="0")
@@ -28,12 +29,12 @@ class KnowledgeGraph:
         contact.add(c1)
         self.central_user.relationships.create(relationship, c1)
 
-        if relationship == "sister":
-            c1.relationships.create("brother", self.central_user)
-        if relationship == "brother":
-            c1.relationships.create("sister", self.central_user)
-        if relationship == "friend":
-            c1.relationships.create("friend", self.central_user)
+        if relationship == "schwester":
+            c1.relationships.create("bruder", self.central_user)
+        if relationship == "bruder":
+            c1.relationships.create("schwester", self.central_user)
+        if relationship == "freund":
+            c1.relationships.create("freund", self.central_user)
 
     def search_contactname_by_relationship(self, relationship):
         if relationship == 'freund':
@@ -53,7 +54,11 @@ class KnowledgeGraph:
     def search_relationship_by_contactname(self, contact_name):
         name = contact_name.replace(" ", "")
         q = 'MATCH (:User)-[r]->(c:contact) WHERE c.name="'+name+'" RETURN type(r);'
-        result = self.db.query(q, returns=str)
+        try:
+            result = self.db.query(q, returns=str)
+        except:
+            raise NotFoundError("unable to find node")
+
         if len(result) == 0:
             return None
 
@@ -77,7 +82,8 @@ if __name__ == "__main__":
     kg = KnowledgeGraph()
     #kg.add_contact("Lara", "sister")
     #print(kg.search_contact_by_relation("sister"))
-    print(kg.search_relationship_by_contactname("blub"))
+    print(kg.search_relationship_by_contactname("Lara"))
 
-    #kg.search_all_contacts()
+    #db = GraphDatabase("http://localhost:7474", username="neo4j", password="Qwertz1#")
+    #db.nodes.get(name="CentralUser", key=0)
 

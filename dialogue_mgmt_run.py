@@ -10,10 +10,10 @@ from rasa_core.agent import Agent
 from rasa_core.channels import HttpInputChannel
 from rasa_core.channels.console import ConsoleInputChannel
 from rasa_core.channels.telegram import TelegramInput
-from interpreter import Interpreter
+#from interpreter import Interpreter
+from interpreter_dialogflow import Interpreter
 
 logger = logging.getLogger(__name__)
-
 
 
 def run_cli_bot(serve_forever=True):
@@ -36,7 +36,7 @@ def run_telegram_bot():
 
     input_channel = (TelegramInput(access_token=telegram_api_key,
                                    verify='event123_bot',
-                                   webhook_url='cdc4acac.ngrok.io/app/webhoook',
+                                   webhook_url='4c276b10.ngrok.io/app/webhoook',
                                    debug_mode=True))
 
     agent.handle_channel(HttpInputChannel(5004, '/app', input_channel))

@@ -9,12 +9,14 @@ slots:
     type: text
   location:
     type: text
-  contactname:
+  firstname:
     type: text
   relationship:
     type: text
   matches:
     type: list
+  time:
+    type: text
 
 intents:
   - greet
@@ -31,6 +33,7 @@ entities:
   - location
   - relativedate
   - relationship
+  - time
 
 templates:
   utter_ask_howcanhelp:
@@ -73,3 +76,4 @@ actions:
   - actions.ActionSearchEvents
   - actions.ActionClearSlots
   - actions.ActionSearchContact
+  - actions.ActionAddContact

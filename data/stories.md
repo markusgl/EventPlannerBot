@@ -329,49 +329,7 @@
     - action_search_contact
 * contact_selection{"builtin.datetime": "ja genau"}
     - utter_goodbye
-    - export
-## Generated Story -8281301799106823185
-* contact_selection{"builtin.datetime": "ja genau"}
-    - utter_goodbye
-    - export
-## Generated Story -6011619657283768675
-    - action_search_contact
-* contact_selection
-    - export
-## Generated Story 4439219233475235728
-* contact_selection
-    - export
-## Generated Story -4584063658579183199
-    - utter_goodbye
-    - export
-## Generated Story -8281301799106823185
-* contact_selection{"builtin.datetime": "ja genau"}
-    - utter_goodbye
-    - export
-## Generated Story -6011619657283768675
-    - action_search_contact
-* contact_selection
-    - export
-## Generated Story 4439219233475235728
-* contact_selection
-    - export
-## Generated Story -4584063658579183199
-    - utter_goodbye
-    - export
-## Generated Story -8281301799106823185
-* contact_selection{"builtin.datetime": "ja genau"}
-    - utter_goodbye
-    - export
-## Generated Story -6011619657283768675
-    - action_search_contact
-* contact_selection
-    - export
-## Generated Story -4584063658579183199
-    - utter_goodbye
-    - export
-## Generated Story 4439219233475235728
-* contact_selection
-    - export
+
 ## Generated Story -1264619619890341108
 * search_event{"relativedate": "heute"}
     - slot{"relativedate": "heute"}
@@ -435,3 +393,62 @@
     - utter_confirm_contact_invitation
 * goodbye
     - utter_goodbye
+    
+## Generated Story 4 
+* search_event{"relativedate": "heute", "activity": "kino", "firstname": "Max"}
+    - slot{"activity": "kino"}    
+    - slot{"relativedate": "heute"}
+    - slot{"firstname": "Max"}
+    - action_search_contact
+* contact_selection
+    - utter_ask_location
+* search_event
+    - action_search_events
+    - slot{"matches": ["Avengers - Infinity War", "Ready Player One", "Black Panther"]}
+    - action_suggest
+* selection{"builtin.datetime": "1", "builtin.number": "1"}
+    - utter_confirm
+    - utter_goodbye
+    
+## Generated Story 4 
+* search_event{"relativedate": "heute", "activity": "kino", "relationship": "Schwester"}
+    - slot{"activity": "kino"}    
+    - slot{"relativedate": "heute"}
+    - slot{"relationship": "schwester"}
+    - action_search_contact
+* contact_selection
+    - utter_ask_location
+* search_event
+    - action_search_events
+    - slot{"matches": ["Avengers - Infinity War", "Ready Player One", "Black Panther"]}
+    - action_suggest
+* selection{"builtin.datetime": "1", "builtin.number": "1"}
+    - utter_confirm
+    - utter_goodbye
+    
+## Generated Story 4 
+* search_event{"activity": "kino", "firstname": "lara"}
+    - slot{"activity": "kino"}    
+    - slot{"firstname": "lara"}
+    - action_search_contact
+* contact_selection
+    - action_add_contact
+* search_event{"location": "berlin"}
+    - utter_ask_time
+* search_event{"datetime": "morgen"}
+    - action_search_events
+    - slot{"matches": ["Avengers - Infinity War", "Ready Player One", "Black Panther"]}
+    - action_suggest
+* selection{"builtin.datetime": "1", "builtin.number": "1"}
+    - utter_confirm
+    - utter_goodbye
+    
+## Generated Story -141789019633875134
+* search_event{"activity": "kino", "firstname": "lara"}
+    - slot{"activity": "kino"}
+    - slot{"firstname": "lara"}
+    - action_search_contact
+* contact_selection{"relationship": "schwester"}
+    - slot{"relationship": "schwester"}
+    - action_add_contact
+    - export

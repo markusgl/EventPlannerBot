@@ -14,9 +14,9 @@ class ActionSearchContact(Action):
         return 'action_search_contact'
 
     def run(self, dispatcher, tracker, domain):
-        # TODO call knowledge base
+
         kg = KnowledgeGraph()
-        contact_name = tracker.get_slot('contactname')
+        contact_name = tracker.get_slot('firstname')
         relation_ship = tracker.get_slot('relationship')
         #print(contact_name)
         #print(relation_ship)
@@ -24,21 +24,41 @@ class ActionSearchContact(Action):
         if contact_name:
             relationship = kg.search_relationship_by_contactname(contact_name)
             if relationship is None:
-                dispatcher.utter_message("Ich konnte leider niemanden als " + relation_ship + " finden.")
+                dispatcher.utter_message("Ich kenne "+ str(contact_name).title() + " nicht. Willst du mir sagen wer das ist?")
             else:
                 SlotSet("relationship", relationship)
-                dispatcher.utter_message("Deinen "+relationship+" "+contact_name+"?")
+                dispatcher.utter_message("Deine(n) "+relationship+" "+contact_name+"?")
         elif relation_ship:
             contact = kg.search_contactname_by_relationship(relation_ship)
             if contact is None:
-                dispatcher.utter_message("Ich konnte leider keinen Kontakt mit dem Namen "+ contact_name + " finden.")
+                if relation_ship == "vater" or relation_ship == "bruder" or relation_ship == "onkel":
+                    dispatcher.utter_message("Ich kenne deinen " + str(relation_ship) + " leider nicht. "
+                                                                                   "Willst du mir sagen wie er heißt?")
+                elif relation_ship == "mutter" or relation_ship == "schwester" or relation_ship == "tante":
+                    dispatcher.utter_message("Ich kenne deine " + str(relation_ship) + " leider."
+                                                                                  "Willst du mir sagen wie sie heißt?")
+                else:
+                    dispatcher.utter_message("Ich kenne " + str(relation_ship) + " nicht.")
             else:
                 SlotSet("contactname", contact)
                 dispatcher.utter_message("Meinst du "+contact+"?")
         else:
-            dispatcher.utter_message("Leider hab ich dich nicht verstanden. Wen willst du mitnehmen?")
+            dispatcher.utter_message("Leider hab ich dich nicht ganz verstanden. Wen willst du mitnehmen?")
 
         return []
+
+
+class ActionAddContact(Action):
+    def name(self):
+        return 'action_add_contact'
+
+    def run(self, dispatcher, tracker, domain):
+        kg = KnowledgeGraph()
+        contact_name = tracker.get_slot('firstname')
+        relation_ship = tracker.get_slot('relationship')
+
+        kg.add_contact(contact_name=contact_name, relationship=relation_ship)
+        dispatcher.utter_message("Danke, jetzt kenn ich auch "+ str(contact_name) +"!")
 
 
 class ActionSearchEvents(Action):
