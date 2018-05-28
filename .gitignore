@@ -105,7 +105,5 @@ ENV/
 *.iml
 
 /models
-
 *.rdf
-
 keys.json
