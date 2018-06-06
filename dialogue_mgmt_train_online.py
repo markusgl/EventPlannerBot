@@ -9,20 +9,21 @@ from rasa_core.agent import Agent
 from rasa_core.channels.console import ConsoleInputChannel
 from rasa_core.policies.keras_policy import KerasPolicy
 from rasa_core.policies.memoization import MemoizationPolicy
-#from interpreter import Interpreter
-from interpreter_dialogflow import Interpreter
+from interpreter_luis import Interpreter
+#from interpreter_dialogflow import Interpreter
 
 logger = logging.getLogger(__name__)
 
 
 def run_eventbot_online(input_channel, interpreter,
                         domain_file="./data/domain.yml",
-                        training_data_file='data/stories.md'):
+                        training_data_file='data/stories'):
     agent = Agent(domain_file,
                   policies=[MemoizationPolicy(), KerasPolicy()],
                   interpreter=interpreter)
 
-    agent.train_online(training_data_file,
+    data = agent.load_data(training_data_file)
+    agent.train_online(data,
                        input_channel=input_channel,
                        max_history=2,
                        batch_size=50,

@@ -13,17 +13,18 @@ slots:
     type: text
   relationship:
     type: text
-  matches:
-    type: list
   time:
     type: text
+  matches:
+    type: list
 
 intents:
-  - greet
-  - goodbye
-  - search_event
-  - selection
   - contact_selection
+  - find_appointment
+  - get_to_know
+  - goodbye
+  - greet
+  - search_event
 
 entities:
   - activity
@@ -57,10 +58,6 @@ templates:
     - 'Wen willst du mitnehmen?'
   utter_confirm:
     - 'Ok habe ich gebucht.'
-  utter_ask_selection:
-    - text: 'Tippe einfach eine Zahl ein'
-      buttons:
-      - title: ""
   utter_confirm_contact_invitation:
     - 'Ok ich haben den Kontakt eingeladen'
 actions:
@@ -77,3 +74,4 @@ actions:
   - actions.ActionClearSlots
   - actions.ActionSearchContact
   - actions.ActionAddContact
+  - actions.ActionSearchAppointment

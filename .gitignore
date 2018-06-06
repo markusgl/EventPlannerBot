@@ -107,3 +107,6 @@ ENV/
 /models
 *.rdf
 keys.json
+client_secret.json
+credentials.json
+blablub.py

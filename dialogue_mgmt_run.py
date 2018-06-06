@@ -10,13 +10,39 @@ from rasa_core.agent import Agent
 from rasa_core.channels import HttpInputChannel
 from rasa_core.channels.console import ConsoleInputChannel
 from rasa_core.channels.telegram import TelegramInput
-#from interpreter import Interpreter
-from interpreter_dialogflow import Interpreter
+from rasa_core.policies import MemoizationPolicy, KerasPolicy
+from rasa_core.featurizers import (MaxHistoryTrackerFeaturizer,
+                                   BinarySingleStateFeaturizer)
+
+from interpreter_luis import Interpreter
+#from interpreter_dialogflow import Interpreter
+
 
 logger = logging.getLogger(__name__)
 
 
+def train_bot():
+    logging.basicConfig(level='INFO')
+
+    training_data_file = './data/stories'
+    model_path = './models/dialogue'
+
+    featurizer = MaxHistoryTrackerFeaturizer(BinarySingleStateFeaturizer(), max_history=5)
+    agent = Agent('./data/domain.yml', policies=[MemoizationPolicy(max_history=5), KerasPolicy(featurizer)])
+
+    training_data = agent.load_data(training_data_file)
+    agent.train(
+            training_data,
+            augmentation_factor=50,
+            epochs=500,
+            batch_size=10,
+            validation_split=0.2)
+
+    agent.persist(model_path)
+
+
 def run_cli_bot(serve_forever=True):
+    train_bot()
     interpreter = Interpreter()
     agent = Agent.load('./models/dialogue', interpreter)
 
@@ -27,6 +53,7 @@ def run_cli_bot(serve_forever=True):
 
 
 def run_telegram_bot():
+    train_bot()
     with open('keys.json') as f:
         data = json.load(f)
     telegram_api_key = data['telegram-api-key']
