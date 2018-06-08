@@ -38,7 +38,7 @@ entities:
 
 templates:
   utter_ask_howcanhelp:
-    - 'Hallo willst du etwas unternehmen? Frag mit nach einer Veranstaltung!'
+    - 'Hallo, ich bin SocialBot dein Begleiter im Alltag. Hast du fragen?'
   utter_goodbye:
     - 'Bis später!'
     - 'Tschüss!'
@@ -60,6 +60,9 @@ templates:
     - 'Ok habe ich gebucht.'
   utter_confirm_contact_invitation:
     - 'Ok ich haben den Kontakt eingeladen'
+  utter_introduce:
+    - 'Ich bin SocialBot. Du kannst mit nach u. a. nach deinen Terminen fragen'
+    - 'Ich bin SocialBot und erinnere dich an unterschiedliche Dinge'
 actions:
   - utter_ask_howcanhelp
   - utter_goodbye
@@ -69,6 +72,7 @@ actions:
   - utter_ask_invite
   - utter_confirm
   - utter_confirm_contact_invitation
+  - utter_introduce
   - actions.ActionSuggest
   - actions.ActionSearchEvents
   - actions.ActionClearSlots

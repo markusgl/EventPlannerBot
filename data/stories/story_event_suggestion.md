@@ -18,3 +18,15 @@
     
     
 ## GENERATED STORIES ##
+
+## Generated Story -4205675749258817950
+* greet
+    - utter_ask_howcanhelp
+* search_event
+    - utter_ask_activity
+* search_event{"activity": "kino"}
+    - slot{"activity": "kino"}
+    - utter_ask_location
+* search_event{"location": "n\u00fcrnberg"}
+    - slot{"location": "n\u00fcrnberg"}
+    - export

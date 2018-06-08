@@ -40,3 +40,28 @@
 * find_appointment{"relativedate": "heute"}
     - slot{"relativedate": "heute"}
     - action_search_appointment
+
+## Generated Story -6420086653261703240
+* greet
+    - utter_ask_howcanhelp
+* get_to_know
+    - utter_introduce
+* find_appointment{"relativedate": "heute"}
+    - slot{"relativedate": "heute"}
+    - action_search_appointment
+* goodbye
+    - utter_goodbye
+
+## Generated Story -3727083982337256137
+* greet
+    - utter_ask_howcanhelp
+* find_appointment{"relativedate": "heute"}
+    - slot{"relativedate": "heute"}
+    - action_search_appointment
+    
+## Generated Story -5401742184894396297
+* greet{"builtin.datetime": "hallor"}
+    - utter_ask_howcanhelp
+* find_appointment{"relativedate": "heute"}
+    - slot{"relativedate": "heute"}
+    - action_search_appointment

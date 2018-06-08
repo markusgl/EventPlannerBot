@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 
 import logging
 import json
+import urllib.request
 
 from rasa_core.agent import Agent
 from rasa_core.channels import HttpInputChannel
@@ -41,8 +42,9 @@ def train_bot():
     agent.persist(model_path)
 
 
-def run_cli_bot(serve_forever=True):
-    train_bot()
+def run_cli_bot(serve_forever=True, train=False):
+    if train:
+        train_bot()
     interpreter = Interpreter()
     agent = Agent.load('./models/dialogue', interpreter)
 
@@ -52,23 +54,29 @@ def run_cli_bot(serve_forever=True):
     return agent
 
 
-def run_telegram_bot():
-    train_bot()
+def run_telegram_bot(webhook_url, train=False):
+    if train:
+        train_bot()
+
     with open('keys.json') as f:
         data = json.load(f)
     telegram_api_key = data['telegram-api-key']
+
+    # set webhook of telegram bot
+    telegram_url = 'https://api.telegram.org/bot' + telegram_api_key + '/setWebhook?url=' + webhook_url
+    urllib.request.urlopen(telegram_url)
 
     interpreter = Interpreter()
     agent = Agent.load('./models/dialogue', interpreter)
 
     input_channel = (TelegramInput(access_token=telegram_api_key,
                                    verify='event123_bot',
-                                   webhook_url='4c276b10.ngrok.io/app/webhoook',
+                                   webhook_url=webhook_url,
                                    debug_mode=True))
 
     agent.handle_channel(HttpInputChannel(5004, '/app', input_channel))
 
 
 if __name__ == '__main__':
-    run_cli_bot()
-    #run_telegram_bot()
+    #run_cli_bot()
+    run_telegram_bot('b64689e6.ngrok.io/app/webhook', False)

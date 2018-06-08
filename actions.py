@@ -14,7 +14,6 @@ from httplib2 import Http
 from oauth2client import file, client, tools
 
 import logging
-logging.getLogger('googleapicliet.discovery_cache').setLevel(logging.ERROR)
 
 
 class ActionSearchContact(Action):
@@ -130,20 +129,24 @@ class ActionSearchAppointment(Action):
         else:
             appointment_time = ""
 
-        print(appointment_time)
-
         if appointment_time:
             events = self.search_google_calendar(appointment_time)
             print(events)
             if not events:
                 dispatcher.utter_message("Du hast heute keine Termine.")
             for event in events:
-                dispatcher.utter_message("Ich konnte folgende Termin finden:")
                 start = event['start'].get('dateTime', event['start'].get('date'))
+                conv_date = datetime.datetime.strptime(start[:(len(start) - 6)], '%Y-%m-%dT%H:%M:%S')
+
+                dispatcher.utter_message("Ich konnte folgende Termine für " + conv_date.strftime('%d.%m.%Y') + " finden: ")
+                dispatcher.utter_message(conv_date.strftime('%H:%M') + " " + event['summary'])
+
                 print(start, event['summary'])
 
+        return []
 
     def search_google_calendar(self, event_time):
+        logging.getLogger('googleapicliet.discovery_cache').setLevel(logging.ERROR)
         # Setup the Calendar API
         SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
         store = file.Storage('credentials.json')
@@ -168,14 +171,15 @@ class ActionSearchAppointment(Action):
 
         return events
 
+    """
     if __name__ == "__main__":
         tomorrow = datetime.datetime.now() + timedelta(days=1)
         event_time = tomorrow.isoformat() + 'Z'
-        print(event_time)
+        #print(event_time)
 
         events = search_google_calendar(event_time)
-        print(events)
-
+        #print(events)
+    """
 
 class ActionSuggest(Action):
     def name(self):
