@@ -62,7 +62,24 @@ class ActionAddContact(Action):
         relation_ship = tracker.get_slot('relationship')
 
         kg.add_contact(contact_name=contact_name, relationship=relation_ship)
-        dispatcher.utter_message("Danke, jetzt kenn ich auch "+ str(contact_name) +"!")
+        dispatcher.utter_message("Danke, jetzt kenne ich auch " + str(contact_name) +"!")
+
+
+class ActionAddMe(Action):
+    def name(self):
+        return 'action_add_me'
+
+    def run(self, dispatcher, tracker, domain):
+        kg = KnowledgeGraph()
+        me_name = tracker.get_slot('firstname')
+        if me_name:
+            kg.add_user(me_name)
+            SlotSet('me_name', me_name)
+            dispatcher.utter_message("Hallo " + me_name.title() + "! Schön von dir zu hören.")
+        else:
+            dispatcher.utter_message("Ich habe deinen Namen leider nicht verstanden. Willst du ihn mir nochmal sagen?")
+
+        return []
 
 
 class ActionSearchEvents(Action):
@@ -131,7 +148,7 @@ class ActionSearchAppointment(Action):
 
         if appointment_time:
             events = self.search_google_calendar(appointment_time)
-            print(events)
+            #print(events)
             if not events:
                 dispatcher.utter_message("Du hast heute keine Termine.")
             for event in events:
@@ -141,7 +158,7 @@ class ActionSearchAppointment(Action):
                 dispatcher.utter_message("Ich konnte folgende Termine für " + conv_date.strftime('%d.%m.%Y') + " finden: ")
                 dispatcher.utter_message(conv_date.strftime('%H:%M') + " " + event['summary'])
 
-                print(start, event['summary'])
+                #print(start, event['summary'])
 
         return []
 
@@ -181,6 +198,7 @@ class ActionSearchAppointment(Action):
         #print(events)
     """
 
+
 class ActionSuggest(Action):
     def name(self):
         return 'action_suggest'
@@ -192,7 +210,7 @@ class ActionSuggest(Action):
             dispatcher.utter_message(str(count) + " " + match)
             count += 1
         dispatcher.utter_message("Wie ist deine Wahl?")
-        dispatcher.utter_button_message("Tippe die entprechende Zahl ein", buttons=[{"1":"eins", "2":"zwei", "3":"drei"}])
+        dispatcher.utter_button_message("Tippe die entsprechende Zahl ein", buttons=[{"1":"eins", "2":"zwei", "3":"drei"}])
 
         return []
 

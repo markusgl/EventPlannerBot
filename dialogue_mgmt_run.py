@@ -78,5 +78,5 @@ def run_telegram_bot(webhook_url, train=False):
 
 
 if __name__ == '__main__':
-    #run_cli_bot()
-    run_telegram_bot('b64689e6.ngrok.io/app/webhook', False)
+    run_cli_bot()
+    #run_telegram_bot('7b6a52df.ngrok.io/app/webhook', False)

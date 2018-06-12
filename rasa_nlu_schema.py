@@ -1,3 +1,4 @@
+"""Schema for mapping other NLU-Schemas to fit to rasa """
 from marshmallow import Schema, fields
 
 

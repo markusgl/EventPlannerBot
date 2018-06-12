@@ -17,6 +17,8 @@ slots:
     type: text
   matches:
     type: list
+  me_name:
+    type: text
 
 intents:
   - contact_selection
@@ -24,7 +26,9 @@ intents:
   - get_to_know
   - goodbye
   - greet
+  - introduce
   - search_event
+  - tell_mood
 
 entities:
   - activity
@@ -37,8 +41,15 @@ entities:
   - time
 
 templates:
+  utter_introduce:
+    - 'Hallo, ich bin SocialBot. Du kannst mich z. B. nach deinen Terminen fragen. Und wer bist du?'
+    - 'Guten Tag, ich bin SocialBot und wie heißt du?'
+    - 'Hallo, ich bin SocialBot! Wie heißt du?'
+    - 'Hallo, ich bin SocialBot und kann dir Helfen Termine zu finden oder Veranstaltungen vorzuschlagen. Wie ist dein Name?'
   utter_ask_howcanhelp:
-    - 'Hallo, ich bin SocialBot dein Begleiter im Alltag. Hast du fragen?'
+    - 'Wie kann ich dir helfen? Ich kann für die Veranstaltungen in deiner Nähe finden.'
+    - 'Wie geht es dir? '
+    - 'Ich kann für die nach Veranstaltungen suchen.'
   utter_goodbye:
     - 'Bis später!'
     - 'Tschüss!'
@@ -60,9 +71,9 @@ templates:
     - 'Ok habe ich gebucht.'
   utter_confirm_contact_invitation:
     - 'Ok ich haben den Kontakt eingeladen'
-  utter_introduce:
-    - 'Ich bin SocialBot. Du kannst mit nach u. a. nach deinen Terminen fragen'
-    - 'Ich bin SocialBot und erinnere dich an unterschiedliche Dinge'
+  utter_name_not_understood:
+    - 'Ich habe deinen Namen leider nicht verstanden. Kannst du ihn nochmal wiederholen?'
+
 actions:
   - utter_ask_howcanhelp
   - utter_goodbye
@@ -73,9 +84,11 @@ actions:
   - utter_confirm
   - utter_confirm_contact_invitation
   - utter_introduce
+  - utter_name_not_understood
   - actions.ActionSuggest
   - actions.ActionSearchEvents
   - actions.ActionClearSlots
   - actions.ActionSearchContact
   - actions.ActionAddContact
   - actions.ActionSearchAppointment
+  - actions.ActionAddMe

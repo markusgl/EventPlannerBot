@@ -110,3 +110,5 @@ keys.json
 client_secret.json
 credentials.json
 blablub.py
+knowledge_base/neo4j_creds.json
+stories.md
