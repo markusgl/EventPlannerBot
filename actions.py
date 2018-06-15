@@ -3,7 +3,7 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import unicode_literals
 
-from knowledge_base.neo_4_j_graph import KnowledgeGraph
+from knowledge_base.knowledge_graph import KnowledgeGraph
 
 from rasa_core.actions.action import Action
 from rasa_core.events import SlotSet, AllSlotsReset, Restarted
@@ -24,14 +24,18 @@ class ActionSearchContact(Action):
         kg = KnowledgeGraph()
         contact_name = tracker.get_slot('firstname')
         relation_ship = tracker.get_slot('relationship')
+        me_name = tracker.get_slot('me_name')
 
+        # search relationship by contact name
         if contact_name:
-            relationship = kg.search_relationship_by_contactname(contact_name)
+            relationship = kg.search_relationship_by_contactname(me_name, contact_name)
             if relationship is None:
                 dispatcher.utter_message("Ich kenne "+ str(contact_name).title() + " nicht. Willst du mir sagen wer das ist?")
             else:
                 SlotSet("relationship", relationship)
                 dispatcher.utter_message("Deine(n) "+relationship+" "+contact_name+"?")
+
+        # search contact name by given relationship
         elif relation_ship:
             contact = kg.search_contactname_by_relationship(relation_ship)
             if contact is None:
@@ -58,14 +62,22 @@ class ActionAddContact(Action):
 
     def run(self, dispatcher, tracker, domain):
         kg = KnowledgeGraph()
-        contact_name = tracker.get_slot('firstname')
-        relation_ship = tracker.get_slot('relationship')
 
-        kg.add_contact(contact_name=contact_name, relationship=relation_ship)
-        dispatcher.utter_message("Danke, jetzt kenne ich auch " + str(contact_name) +"!")
+        me_name = tracker.get_slot('me_name')
+        contactname = tracker.get_slot('firstname')
+        relationship = tracker.get_slot('relationship')
+
+        if me_name and contactname and relationship:
+            kg.add_contact(me_name, contactname, relationship)
+            dispatcher.utter_message("Danke, jetzt kenne ich auch " + str(contactname) +"!")
+        else:
+            dispatcher.utter_message("Ich habe die Namen leider nicht verstanden. Willst du mir sie nochmal sagen?")
 
 
 class ActionAddMe(Action):
+    """
+    Add the central user i.e. 'Me' if it does not exits yet
+    """
     def name(self):
         return 'action_add_me'
 
@@ -73,9 +85,14 @@ class ActionAddMe(Action):
         kg = KnowledgeGraph()
         me_name = tracker.get_slot('firstname')
         if me_name:
-            kg.add_user(me_name)
+            # search if user already exist
+            exist = kg.get_me_by_name(me_name)
+            if exist:
+                dispatcher.utter_message("Ich kenne bereits " + me_name.title() + "! Hatten wir schonmal Kontakt?")
+            else:
+                dispatcher.utter_message("Hallo " + me_name.title() + "! Schön von dir zu hören.")
+                kg.add_user(me_name)
             SlotSet('me_name', me_name)
-            dispatcher.utter_message("Hallo " + me_name.title() + "! Schön von dir zu hören.")
         else:
             dispatcher.utter_message("Ich habe deinen Namen leider nicht verstanden. Willst du ihn mir nochmal sagen?")
 
@@ -187,16 +204,6 @@ class ActionSearchAppointment(Action):
             print(start, event['summary'])
 
         return events
-
-    """
-    if __name__ == "__main__":
-        tomorrow = datetime.datetime.now() + timedelta(days=1)
-        event_time = tomorrow.isoformat() + 'Z'
-        #print(event_time)
-
-        events = search_google_calendar(event_time)
-        #print(events)
-    """
 
 
 class ActionSuggest(Action):

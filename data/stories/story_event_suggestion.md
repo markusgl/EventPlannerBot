@@ -1,6 +1,6 @@
 ## story 0 no activity, no location, no time
 * greet
-    - utter_ask_howcanhelp
+    - utter_greet
 * search_event
     - utter_ask_activity
 * search_event{"activity": "kino"}
@@ -21,7 +21,7 @@
 
 ## Generated Story -4205675749258817950
 * greet
-    - utter_ask_howcanhelp
+    - utter_greet
 * search_event
     - utter_ask_activity
 * search_event{"activity": "kino"}

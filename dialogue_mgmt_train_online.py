@@ -7,6 +7,7 @@ import logging
 
 from rasa_core.agent import Agent
 from rasa_core.channels.console import ConsoleInputChannel
+from rasa_core.policies import FallbackPolicy
 from rasa_core.policies.keras_policy import KerasPolicy
 from rasa_core.policies.memoization import MemoizationPolicy
 from interpreter_luis import Interpreter
@@ -18,8 +19,11 @@ logger = logging.getLogger(__name__)
 def run_eventbot_online(input_channel, interpreter,
                         domain_file="./data/domain.yml",
                         training_data_file='data/stories'):
+
+    fallback = FallbackPolicy(fallback_action_name="utter_not_understood",
+                              core_threshold=0.6, nlu_threshold=0.6)
     agent = Agent(domain_file,
-                  policies=[MemoizationPolicy(), KerasPolicy()],
+                  policies=[MemoizationPolicy(), KerasPolicy(), fallback],
                   interpreter=interpreter)
 
     data = agent.load_data(training_data_file)

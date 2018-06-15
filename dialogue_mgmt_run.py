@@ -11,6 +11,7 @@ from rasa_core.agent import Agent
 from rasa_core.channels import HttpInputChannel
 from rasa_core.channels.console import ConsoleInputChannel
 from rasa_core.channels.telegram import TelegramInput
+from rasa_core.policies.fallback import FallbackPolicy
 from rasa_core.policies import MemoizationPolicy, KerasPolicy
 from rasa_core.featurizers import (MaxHistoryTrackerFeaturizer,
                                    BinarySingleStateFeaturizer)
@@ -28,8 +29,10 @@ def train_bot():
     training_data_file = './data/stories'
     model_path = './models/dialogue'
 
+    fallback = FallbackPolicy(fallback_action_name="utter_not_understood",
+                              core_threshold=0.6, nlu_threshold=0.6)
     featurizer = MaxHistoryTrackerFeaturizer(BinarySingleStateFeaturizer(), max_history=5)
-    agent = Agent('./data/domain.yml', policies=[MemoizationPolicy(max_history=5), KerasPolicy(featurizer)])
+    agent = Agent('./data/domain.yml', policies=[MemoizationPolicy(max_history=5), KerasPolicy(featurizer), fallback])
 
     training_data = agent.load_data(training_data_file)
     agent.train(
@@ -78,5 +81,5 @@ def run_telegram_bot(webhook_url, train=False):
 
 
 if __name__ == '__main__':
-    run_cli_bot()
+    run_cli_bot(train=False)
     #run_telegram_bot('7b6a52df.ngrok.io/app/webhook', False)
