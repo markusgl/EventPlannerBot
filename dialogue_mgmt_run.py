@@ -58,6 +58,7 @@ def run_cli_bot(serve_forever=True, train=False):
 
 
 def run_telegram_bot(webhook_url, train=False):
+    # TODO check if neo4j connection works
     if train:
         train_bot()
 

@@ -74,6 +74,22 @@ class ActionAddContact(Action):
             dispatcher.utter_message("Ich habe die Namen leider nicht verstanden. Willst du mir sie nochmal sagen?")
 
 
+class ActionSearchMe(Action):
+    def name(self):
+        return 'action_search_me'
+
+    def run(selfs, dispatcher, tracker, domain):
+        kg = KnowledgeGraph()
+        me_name = tracker.get_slot('firstname')
+        if me_name:
+            exist = kg.get_me_by_name(me_name)
+            if exist:
+                dispatcher.utter_message("Ich kenne bereits " + me_name.title() + "! Kennen wir uns schon?")
+            else:
+                ActionAddMe.run(dispatcher, tracker, domain)
+        return []
+
+
 class ActionAddMe(Action):
     """
     Add the central user i.e. 'Me' if it does not exits yet
@@ -84,19 +100,11 @@ class ActionAddMe(Action):
     def run(self, dispatcher, tracker, domain):
         kg = KnowledgeGraph()
         me_name = tracker.get_slot('firstname')
-        if me_name:
-            # search if user already exist
-            exist = kg.get_me_by_name(me_name)
-            if exist:
-                dispatcher.utter_message("Ich kenne bereits " + me_name.title() + "! Hatten wir schonmal Kontakt?")
-            else:
-                dispatcher.utter_message("Hallo " + me_name.title() + "! Schön von dir zu hören.")
-                kg.add_user(me_name)
-            SlotSet('me_name', me_name)
-        else:
-            dispatcher.utter_message("Ich habe deinen Namen leider nicht verstanden. Willst du ihn mir nochmal sagen?")
 
-        return []
+        kg.add_me(me_name)
+        dispatcher.utter_message("Hallo " + me_name.title() + "! Schön von dir zu hören.")
+
+        return [SlotSet('me_name', me_name)]
 
 
 class ActionSearchEvents(Action):

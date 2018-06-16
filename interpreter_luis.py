@@ -9,7 +9,6 @@ from rasa_nlu_schema import RasaNLUSchema, NLUResponse, EntitiesSchema, IntentSc
 class Interpreter(RasaNLUInterpreter):
 
     def __init__(self):
-        #super(Interpreter, self)__init__()
         with open('keys.json') as f:
             data = json.load(f)
         self.subscription_key = data['luis-subscription-key']
@@ -20,7 +19,6 @@ class Interpreter(RasaNLUInterpreter):
         :param query: message to be handled
         :return: JSON response from LUIS.ai
         """
-        #encoded_query = quote(query)
 
         params = {"subscription-key": self.subscription_key,
                   "verbose": "true",
@@ -73,7 +71,6 @@ class Interpreter(RasaNLUInterpreter):
         data, error = schema.dump(nlu_response)
 
         return data
-
 
 #interpreter = Interpreter()
 #interpreter.parse("Ich würde heute gerne ins Kino gehen?")

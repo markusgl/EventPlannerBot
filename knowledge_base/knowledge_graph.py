@@ -30,7 +30,7 @@ class KnowledgeGraph:
         self.graph = Graph(host="localhost", username=username, password=password)
 
 
-    def add_user(self, username):
+    def add_me(self, username):
         """
         Pushes a new central user 'Me' to the graph
         Gets a username, creats an Me object and pushes it to the graph
@@ -50,8 +50,10 @@ class KnowledgeGraph:
         :param me_name: string with firstname of me
         :return: me object
         """
-        print(me_name)
-        me = Me().match(self.graph, me_name.title()).first()
+        result = self.graph.run('MATCH (n:Me) WHERE n.firstname="' + me_name.title() + '" RETURN n.firstname').data()
+
+        me = Me()
+        me.firstname = result[0]['n.firstname']
 
         return me
 
@@ -131,11 +133,6 @@ class KnowledgeGraph:
 
 
 if __name__ == '__main__':
-    knowledge_graph = KnowledgeGraph('neo4j_creds.json')
-    knowledge_graph.get_me_by_name('dieter')
-
-    #knowledge_graph.add_contact("Detlef", "Hans", "friend")
-    #print(knowledge_graph.search_relationship_by_contactname("Detlef", "Max"))
-    #knowledge_graph.search_contactname_by_relationship("Detlef", "schwester")
-    #print(relationships['schwester'])
-
+    kg = KnowledgeGraph('neo4j_creds.json')
+    #kg.add_me('marggus')
+    kg.get_me_by_name('markus')

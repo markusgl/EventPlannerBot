@@ -2,7 +2,7 @@ from py2neo.ogm import GraphObject, Property, RelatedTo, RelatedFrom
 
 
 class Me(GraphObject):
-    __primarykey__ = "firstname"
+    #__primarykey__ = id
 
     firstname = Property()
     lastname = Property()
@@ -19,7 +19,7 @@ class Me(GraphObject):
 
 
 class Contact(GraphObject):
-    __primarykey__ = "firstname"
+    #__primarykey__ = id
 
     firstname = Property()
     lastname = Property()

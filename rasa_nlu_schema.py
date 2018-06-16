@@ -1,4 +1,4 @@
-"""Schema for mapping other NLU-Schemas to fit to rasa """
+""" Schema for mapping other NLU-Schemas to fit to rasa """
 from marshmallow import Schema, fields
 
 
@@ -25,5 +25,4 @@ class RasaNLUSchema(Schema):
     text = fields.Str()
     intent = fields.Nested(IntentSchema)
     entities = fields.List(fields.Nested(EntitiesSchema))
-
 

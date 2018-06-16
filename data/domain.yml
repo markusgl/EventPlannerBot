@@ -51,10 +51,12 @@ templates:
     - 'Ich bin SocialBot und kann dir helfen Termine zu finden oder Veranstaltungen vorzuschlagen.'
   utter_ask_howcanhelp:
     - 'Wie kann ich dir helfen? Ich kann für die Veranstaltungen in deiner Nähe finden.'
-    - 'Was möchtest du tu? Ich kann für die nach Veranstaltungen suchen.'
+    - 'Was möchtest du tun? Ich kann für die nach Veranstaltungen suchen.'
   utter_goodbye:
     - 'Bis später!'
     - 'Tschüss!'
+  utter_ack_refuse:
+    - 'Ok auch nicht schlimm'
   utter_ask_location:
     - 'Ok du willst ins {activity} und wo?'
     - 'Alles klar. An welchem Ort?'
@@ -98,3 +100,4 @@ actions:
   - actions.ActionAddContact
   - actions.ActionSearchAppointment
   - actions.ActionAddMe
+  - actions.ActionSearchMe

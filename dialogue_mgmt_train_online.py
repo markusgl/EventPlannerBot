@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 
 import logging
 
+from neo4j.exceptions import ServiceUnavailable
 from rasa_core.agent import Agent
 from rasa_core.channels.console import ConsoleInputChannel
 from rasa_core.policies import FallbackPolicy
@@ -12,13 +13,14 @@ from rasa_core.policies.keras_policy import KerasPolicy
 from rasa_core.policies.memoization import MemoizationPolicy
 from interpreter_luis import Interpreter
 #from interpreter_dialogflow import Interpreter
+from knowledge_base.knowledge_graph import KnowledgeGraph
 
 logger = logging.getLogger(__name__)
 
 
 def run_eventbot_online(input_channel, interpreter,
                         domain_file="./data/domain.yml",
-                        training_data_file='data/stories'):
+                        training_data_file='./data/stories'):
 
     fallback = FallbackPolicy(fallback_action_name="utter_not_understood",
                               core_threshold=0.6, nlu_threshold=0.6)
@@ -39,5 +41,9 @@ def run_eventbot_online(input_channel, interpreter,
 
 if __name__ == '__main__':
     logging.basicConfig(level="INFO")
+    try:
+        kg = KnowledgeGraph()
+    except ServiceUnavailable:
+        print('Neo4j connection failed. Program stopped.')
     luis_interpreter = Interpreter()
     run_eventbot_online(ConsoleInputChannel(), luis_interpreter)
