@@ -53,9 +53,11 @@ class KnowledgeGraph:
         result = self.graph.run('MATCH (n:Me) WHERE n.firstname="' + me_name.title() + '" RETURN n.firstname').data()
 
         me = Me()
-        me.firstname = result[0]['n.firstname']
-
-        return me
+        if result:
+            me.firstname = result[0]['n.firstname']
+            return me
+        else:
+            return None
 
     def add_contact(self, me_name, contactname, relationship):
         """
@@ -131,8 +133,9 @@ class KnowledgeGraph:
 
         return contactname
 
-
+"""
 if __name__ == '__main__':
     kg = KnowledgeGraph('neo4j_creds.json')
     #kg.add_me('marggus')
-    kg.get_me_by_name('markus')
+    kg.get_me_by_name('marggus')
+"""

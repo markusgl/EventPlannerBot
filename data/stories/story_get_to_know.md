@@ -2,7 +2,9 @@
 * greet
     - utter_greet
 * introduce{"name": "max"}
+    - slot{"firstname": "max"}
     - action_search_me
+* agree
     - utter_ask_howcanhelp
 * goodbye
     - utter_goodbye
@@ -14,7 +16,9 @@
 * introduce
     - utter_name_not_understood    
 * introduce{"name": "sabrina"}
+    - slot{"firstname": "max"}
     - action_search_me
+* agree
     - utter_ask_howcanhelp
 * goodbye
     - utter_goodbye
@@ -167,4 +171,65 @@
     - action_add_me
     - slot{"me_name": "markus"}
     - utter_ask_howcanhelp
+    - export
+    
+## Generated Story 5831449310394929604
+* greet
+    - utter_greet
+* introduce{"firstname": "markus"}
+    - slot{"firstname": "markus"}
+    - action_search_me
+* decline
+    - action_add_me
+    - slot{"me_name": "markus"}
+    - utter_ask_howcanhelp
+* find_appointment{"appointment": "termine", "relativedate": "heute"}
+    - slot{"relativedate": "heute"}
+    - action_search_appointment
+    - export
+
+## Generated Story -4759862219993997219
+* greet
+    - utter_greet
+* introduce{"firstname": "markus"}
+    - slot{"firstname": "markus"}
+    - action_search_me
+* agree
+    - utter_ask_howcanhelp
+    - export
+
+## Generated Story -6508573698147768083
+* greet
+    - utter_greet
+* introduce{"firstname": "markus"}
+    - slot{"firstname": "markus"}
+    - action_search_me
+* agree
+    - utter_ask_howcanhelp
+    
+## Generated Story -4177366327226196226
+* greet
+    - utter_greet
+* introduce{"firstname": "markus"}
+    - slot{"firstname": "markus"}
+    - action_search_me
+* agree
+    - utter_ask_howcanhelp
+* find_appointment{"appointment": "termine", "relativedate": "heute"}
+    - slot{"relativedate": "heute"}
+    - action_search_appointment
+    - export
+    
+* greet
+    - utter_greet
+* introduce{"firstname": "markus"}
+    - slot{"firstname": "markus"}
+    - action_search_me
+* decline
+    - action_add_me
+    - slot{"me_name": "markus"}
+    - utter_ask_howcanhelp
+* find_appointment{"appointment": "termine", "relativedate": "heute"}
+    - slot{"relativedate": "heute"}
+    - action_search_appointment
     - export

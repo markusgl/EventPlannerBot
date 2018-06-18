@@ -30,3 +30,26 @@
 * search_event{"location": "n\u00fcrnberg"}
     - slot{"location": "n\u00fcrnberg"}
     - export
+ 
+## Generated Story -3387218605229212631
+* greet
+    - utter_greet
+* introduce{"firstname": "markus"}
+    - slot{"firstname": "markus"}
+    - action_search_me
+    - slot{"me_name": "markus"}
+* agree
+    - utter_ask_howcanhelp
+* search_event{"activity": "kino", "firstname": "lara"}
+    - slot{"activity": "kino"}
+    - slot{"firstname": "lara"}
+    - action_search_contact
+* contact_selection{"relationship": "schwester"}
+    - slot{"relationship": "schwester"}
+    - action_add_contact
+    - utter_ask_time
+* greet{"relativedate": "heute"}
+    - slot{"relativedate": "heute"}
+    - action_search_events
+* goodbye
+    - export

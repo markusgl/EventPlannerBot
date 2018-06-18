@@ -70,3 +70,37 @@
 * find_appointment{"relativedate": "heute"}
     - slot{"relativedate": "heute"}
     - action_search_appointment
+
+## Generated Story 1945875031382049932
+* greet
+    - utter_greet
+* introduce{"firstname": "markus"}
+    - slot{"firstname": "markus"}
+    - action_search_me
+    - slot{"me_name": "markus"}
+* agree
+    - utter_ask_howcanhelp
+* find_appointment{"relativedate": "heute"}
+    - slot{"relativedate": "heute"}
+    - action_search_appointment
+* goodbye
+    - utter_goodbye
+    - export
+    
+## Generated Story -6832732766581042839
+* greet
+    - utter_greet
+* introduce{"firstname": "markus"}
+    - slot{"firstname": "markus"}
+    - action_search_me
+    - slot{"me_name": "markus"}
+* decline
+    - action_add_me
+    - slot{"me_name": "markus"}
+    - utter_ask_howcanhelp
+* find_appointment{"appointment": "termine", "relativedate": "heute"}
+    - slot{"relativedate": "heute"}
+    - action_search_appointment
+* goodbye{"builtin.datetime": "danke . tsch\u00fcss"}
+    - utter_goodbye
+    - export

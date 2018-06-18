@@ -7,6 +7,7 @@ import logging
 import json
 import urllib.request
 
+from neo4j.exceptions import ServiceUnavailable
 from rasa_core.agent import Agent
 from rasa_core.channels import HttpInputChannel
 from rasa_core.channels.console import ConsoleInputChannel
@@ -18,7 +19,7 @@ from rasa_core.featurizers import (MaxHistoryTrackerFeaturizer,
 
 from interpreter_luis import Interpreter
 #from interpreter_dialogflow import Interpreter
-
+from knowledge_base.knowledge_graph import KnowledgeGraph
 
 logger = logging.getLogger(__name__)
 
@@ -58,7 +59,6 @@ def run_cli_bot(serve_forever=True, train=False):
 
 
 def run_telegram_bot(webhook_url, train=False):
-    # TODO check if neo4j connection works
     if train:
         train_bot()
 
@@ -67,8 +67,12 @@ def run_telegram_bot(webhook_url, train=False):
     telegram_api_key = data['telegram-api-key']
 
     # set webhook of telegram bot
-    telegram_url = 'https://api.telegram.org/bot' + telegram_api_key + '/setWebhook?url=' + webhook_url
-    urllib.request.urlopen(telegram_url)
+    try:
+        telegram_url = 'https://api.telegram.org/bot' + telegram_api_key + '/setWebhook?url=' + webhook_url
+        urllib.request.urlopen(telegram_url)
+    except:
+        print("Error setting telegram webhook")
+        return
 
     interpreter = Interpreter()
     agent = Agent.load('./models/dialogue', interpreter)
@@ -82,5 +86,10 @@ def run_telegram_bot(webhook_url, train=False):
 
 
 if __name__ == '__main__':
-    run_cli_bot(train=False)
-    #run_telegram_bot('7b6a52df.ngrok.io/app/webhook', False)
+    logging.basicConfig(level="INFO")
+    try:
+        kg = KnowledgeGraph()
+    except ServiceUnavailable:
+        print('Neo4j connection failed. Program stopped.')
+    #run_cli_bot(train=True)
+    run_telegram_bot('21c658a2.ngrok.io/app/webhook', False)

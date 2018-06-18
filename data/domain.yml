@@ -19,9 +19,13 @@ slots:
     type: list
   me_name:
     type: text
+  known_user:
+    type: bool
 
 intents:
+  - agree
   - contact_selection
+  - decline
   - find_appointment
   - get_to_know
   - goodbye

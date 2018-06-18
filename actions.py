@@ -3,10 +3,12 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import unicode_literals
 
+from rasa_core.actions.forms import EntityFormField
+
 from knowledge_base.knowledge_graph import KnowledgeGraph
 
 from rasa_core.actions.action import Action
-from rasa_core.events import SlotSet, AllSlotsReset, Restarted
+from rasa_core.events import SlotSet, AllSlotsReset, Restarted, UserUttered
 from datetime import timedelta
 import datetime
 from googleapiclient.discovery import build
@@ -15,8 +17,10 @@ from oauth2client import file, client, tools
 
 import logging
 
-
 class ActionSearchContact(Action):
+    #def required_fields(self):
+    #    return[]
+
     def name(self):
         return 'action_search_contact'
 
@@ -27,16 +31,16 @@ class ActionSearchContact(Action):
         me_name = tracker.get_slot('me_name')
 
         # search relationship by contact name
-        if contact_name:
+        if me_name and contact_name:
             relationship = kg.search_relationship_by_contactname(me_name, contact_name)
             if relationship is None:
-                dispatcher.utter_message("Ich kenne "+ str(contact_name).title() + " nicht. Willst du mir sagen wer das ist?")
+                dispatcher.utter_message("Ich kenne " + str(contact_name).title() + " nicht. Willst du mir sagen wer das ist?")
             else:
                 SlotSet("relationship", relationship)
                 dispatcher.utter_message("Deine(n) "+relationship+" "+contact_name+"?")
 
         # search contact name by given relationship
-        elif relation_ship:
+        elif me_name and relation_ship:
             contact = kg.search_contactname_by_relationship(relation_ship)
             if contact is None:
                 if relation_ship == "vater" or relation_ship == "bruder" or relation_ship == "onkel":
@@ -50,6 +54,9 @@ class ActionSearchContact(Action):
             else:
                 SlotSet("contactname", contact)
                 dispatcher.utter_message("Meinst du "+contact+"?")
+        elif not me_name:
+            dispatcher.utter_message("Leider kenne ich dich noch nicht und auch deine Kontkate nicht. "
+                                     "Willst du mir sagen wie du heißt?")
         else:
             dispatcher.utter_message("Leider hab ich dich nicht ganz verstanden. Wen willst du mitnehmen?")
 
@@ -69,7 +76,7 @@ class ActionAddContact(Action):
 
         if me_name and contactname and relationship:
             kg.add_contact(me_name, contactname, relationship)
-            dispatcher.utter_message("Danke, jetzt kenne ich auch " + str(contactname) +"!")
+            dispatcher.utter_message("Danke, jetzt kenne ich auch " + str(contactname).title() + "!")
         else:
             dispatcher.utter_message("Ich habe die Namen leider nicht verstanden. Willst du mir sie nochmal sagen?")
 
@@ -78,7 +85,7 @@ class ActionSearchMe(Action):
     def name(self):
         return 'action_search_me'
 
-    def run(selfs, dispatcher, tracker, domain):
+    def run(self, dispatcher, tracker, domain):
         kg = KnowledgeGraph()
         me_name = tracker.get_slot('firstname')
         if me_name:
@@ -86,8 +93,12 @@ class ActionSearchMe(Action):
             if exist:
                 dispatcher.utter_message("Ich kenne bereits " + me_name.title() + "! Kennen wir uns schon?")
             else:
-                ActionAddMe.run(dispatcher, tracker, domain)
-        return []
+                #ActionAddMe.run(dispatcher, tracker, domain)
+
+                kg.add_me(me_name)
+                dispatcher.utter_message("Hallo " + me_name.title() + "! Schön von dir zu hören.")
+
+        return [SlotSet('me_name', me_name)]
 
 
 class ActionAddMe(Action):
@@ -111,6 +122,13 @@ class ActionSearchEvents(Action):
     """
     Searches eveent recommendations in the area and suggests contacts to join
     """
+    #@staticmethod
+    #def required_fields(self):
+    #    return[
+    #        EntityFormField("location", "location"),
+    #        EntityFormField("dateperiod", "datetime", "relativedate")
+    #    ]
+
     def name(self):
         return 'action_search_events'
 
@@ -196,7 +214,7 @@ class ActionSearchAppointment(Action):
         if not creds or creds.invalid:
             flow = client.flow_from_clientsecrets('client_secret.json', SCOPES)
             creds = tools.run_flow(flow, store)
-        service = build('calendar', 'v3', http=creds.authorize(Http()))
+        service = build('calendar', 'v3', http=creds.authorize(Http()), cache_discovery=False)
 
         # Call the Calendar API
         events_result = service.events().list(calendarId='primary', timeMin=event_time,
