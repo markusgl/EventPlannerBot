@@ -27,13 +27,13 @@ logger = logging.getLogger(__name__)
 def train_bot():
     logging.basicConfig(level='INFO')
 
-    training_data_file = './data/stories'
+    training_data_file = './validation_set/stories'
     model_path = './models/dialogue'
 
     fallback = FallbackPolicy(fallback_action_name="utter_not_understood",
                               core_threshold=0.6, nlu_threshold=0.6)
     featurizer = MaxHistoryTrackerFeaturizer(BinarySingleStateFeaturizer(), max_history=5)
-    agent = Agent('./data/domain.yml', policies=[MemoizationPolicy(max_history=5), KerasPolicy(featurizer), fallback])
+    agent = Agent('./validation_set/domain.yml', policies=[MemoizationPolicy(max_history=5), KerasPolicy(featurizer), fallback])
 
     training_data = agent.load_data(training_data_file)
     agent.train(
@@ -47,6 +47,13 @@ def train_bot():
 
 
 def run_cli_bot(serve_forever=True, train=False):
+    logging.basicConfig(level="INFO")
+    try:
+        KnowledgeGraph()
+    except ServiceUnavailable:
+        print('Neo4j connection failed. Program stopped.')
+        return
+
     if train:
         train_bot()
     interpreter = Interpreter()
@@ -59,6 +66,13 @@ def run_cli_bot(serve_forever=True, train=False):
 
 
 def run_telegram_bot(webhook_url, train=False):
+    logging.basicConfig(level="INFO")
+    try:
+        KnowledgeGraph()
+    except ServiceUnavailable:
+        print('Neo4j connection failed. Program stopped.')
+        return
+
     if train:
         train_bot()
 
@@ -86,10 +100,5 @@ def run_telegram_bot(webhook_url, train=False):
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level="INFO")
-    try:
-        kg = KnowledgeGraph()
-    except ServiceUnavailable:
-        print('Neo4j connection failed. Program stopped.')
     #run_cli_bot(train=True)
     run_telegram_bot('21c658a2.ngrok.io/app/webhook', False)

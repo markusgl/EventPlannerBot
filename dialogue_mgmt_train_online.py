@@ -19,8 +19,13 @@ logger = logging.getLogger(__name__)
 
 
 def run_eventbot_online(input_channel, interpreter,
-                        domain_file="./data/domain.yml",
-                        training_data_file='./data/stories'):
+                        domain_file="./validation_set/domain.yml",
+                        training_data_file='./validation_set/stories'):
+    try:
+        KnowledgeGraph()
+    except ServiceUnavailable:
+        print('Neo4j connection failed. Program stopped.')
+        return
 
     fallback = FallbackPolicy(fallback_action_name="utter_not_understood",
                               core_threshold=0.6, nlu_threshold=0.6)
@@ -41,9 +46,5 @@ def run_eventbot_online(input_channel, interpreter,
 
 if __name__ == '__main__':
     logging.basicConfig(level="INFO")
-    try:
-        kg = KnowledgeGraph()
-    except ServiceUnavailable:
-        print('Neo4j connection failed. Program stopped.')
     luis_interpreter = Interpreter()
     run_eventbot_online(ConsoleInputChannel(), luis_interpreter)

@@ -2,19 +2,25 @@
   "rasa_nlu_data": {
     "common_examples": [
       {
-        "text": "Hallo",
+        "text": "hallo",
         "intent": "greet",
         "entities": []
       },
       {
-        "text": "Habe ich heute Termine?",
+        "text": "habe ich heute termine?",
         "intent": "find_appointment",
         "entities": [
           {
             "start": 9,
-            "end": 15,
-            "value": "heute ",
+            "end": 14,
+            "value": "heute",
             "entity": "relativedate"
+          },
+          {
+            "start": 15,
+            "end": 22,
+            "value": "termine",
+            "entity": "appointment"
           }
         ]
       },
@@ -24,7 +30,7 @@
         "entities": []
       },
       {
-        "text": "Wer bist du?",
+        "text": "wer bist du?",
         "intent": "get_to_know",
         "entities": []
       },
@@ -58,7 +64,7 @@
         ]
       },
       {
-        "text": "Hi",
+        "text": "hi",
         "intent": "greet",
         "entities": []
       },
@@ -932,6 +938,117 @@
             "entity": "dateperiod"
           }
         ]
+      },
+      {
+        "text": "grüß gott",
+        "intent": "greet",
+        "entities": []
+      },
+      {
+        "text": "moin",
+        "intent": "greet",
+        "entities": []
+      },
+      {
+        "text": "sei gegrüßt",
+        "intent": "greet",
+        "entities": []
+      },
+      {
+        "text": "richtig",
+        "intent": "agree",
+        "entities": []
+      },
+      {
+        "text": "nö",
+        "intent": "decline",
+        "entities": []
+      },
+      {
+        "text": "gibt es heute termine",
+        "intent": "find_appointment",
+        "entities": [
+          {
+            "start": 14,
+            "end": 21,
+            "value": "termine",
+            "entity": "appointment"
+          },
+          {
+            "start": 8,
+            "end": 13,
+            "value": "heute",
+            "entity": "relativedate"
+          }
+        ]
+      },
+      {
+        "text": "habe ich heute etwas vor",
+        "intent": "find_appointment",
+        "entities": [
+          {
+            "start": 9,
+            "end": 14,
+            "value": "heute",
+            "entity": "relativedate"
+          }
+        ]
+      },
+      {
+        "text": "habe ich nächste woche etwas vor",
+        "intent": "find_appointment",
+        "entities": [
+          {
+            "start": 9,
+            "end": 22,
+            "value": "nächste woche",
+            "entity": "dateperiod"
+          }
+        ]
+      },
+      {
+        "text": "ist am wochenende etwas geplant",
+        "intent": "find_appointment",
+        "entities": [
+          {
+            "start": 7,
+            "end": 17,
+            "value": "wochenende",
+            "entity": "dateperiod"
+          }
+        ]
+      },
+      {
+        "text": "meine nichte",
+        "intent": "contact_selection",
+        "entities": [
+          {
+            "start": 6,
+            "end": 12,
+            "value": "nichte",
+            "entity": "relationship"
+          }
+        ]
+      },
+      {
+        "text": "was bist du",
+        "intent": "get_to_know",
+        "entities": []
+      },
+      {
+        "text": "ich heiße helga und wie heißt du?",
+        "intent": "get_to_know",
+        "entities": []
+      },
+      {
+        "text": "ich kenn dich nicht",
+        "intent": "get_to_know",
+        "entities": []
+      },
+      {
+        "text": "was machst du hier",
+        "intent": "get_to_know",
+        "entities": []
       }
     ]
   }

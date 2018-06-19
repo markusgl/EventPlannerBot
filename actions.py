@@ -91,7 +91,7 @@ class ActionSearchMe(Action):
         if me_name:
             exist = kg.get_me_by_name(me_name)
             if exist:
-                dispatcher.utter_message("Ich kenne bereits " + me_name.title() + "! Kennen wir uns schon?")
+                dispatcher.utter_message("Der Name " + me_name.title() + " kommt mir bekannt vor! Kennen wir uns bereits?")
             else:
                 #ActionAddMe.run(dispatcher, tracker, domain)
 
@@ -190,8 +190,8 @@ class ActionSearchAppointment(Action):
             appointment_time = ""
 
         if appointment_time:
+            print(appointment_time)
             events = self.search_google_calendar(appointment_time)
-            #print(events)
             if not events:
                 dispatcher.utter_message("Du hast heute keine Termine.")
             for event in events:
@@ -206,7 +206,7 @@ class ActionSearchAppointment(Action):
         return []
 
     def search_google_calendar(self, event_time):
-        logging.getLogger('googleapicliet.discovery_cache').setLevel(logging.ERROR)
+        #logging.getLogger('googleapicliet.discovery_cache').setLevel(logging.ERROR)
         # Setup the Calendar API
         SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
         store = file.Storage('credentials.json')
@@ -218,18 +218,29 @@ class ActionSearchAppointment(Action):
 
         # Call the Calendar API
         events_result = service.events().list(calendarId='primary', timeMin=event_time,
-                                              maxResults=1, singleEvents=True,
+                                              maxResults=10, singleEvents=True,
                                               orderBy='startTime').execute()
+        print(events_result)
         events = events_result.get('items', [])
+        print(events)
 
+        final_events = []
         if not events:
             print('No upcoming events found.')
             return None
         for event in events:
             start = event['start'].get('dateTime', event['start'].get('date'))
-            print(start, event['summary'])
+            conv_date = datetime.datetime.strptime(start[:(len(start) - 6)], '%Y-%m-%dT%H:%M:%S')
+            today = datetime.datetime.today().strftime('%Y-%m-%d')
+
+            #print(start, event['summary'])ö
 
         return events
+
+if __name__ == '__main__':
+    today = datetime.datetime.now()
+    appointment_time = today.isoformat() + 'Z'
+    ActionSearchAppointment().search_google_calendar(appointment_time)
 
 
 class ActionSuggest(Action):

@@ -19,8 +19,8 @@ print("recording...")
 frames = []
 
 for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
-    data = stream.read(CHUNK)
-    frames.append(data)
+    validation_set = stream.read(CHUNK)
+    frames.append(validation_set)
 print("finished recording")
 
 # stop Recording

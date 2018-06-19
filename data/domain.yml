@@ -46,27 +46,28 @@ entities:
 
 templates:
   utter_greet:
-    - 'Hallo, ich bin SocialBot. Du kannst mich z. B. nach deinen Terminen fragen. Und wer bist du?'
-    - 'Guten Tag, ich bin SocialBot und wie heißt du?'
-    - 'Hallo, ich bin SocialBot! Wie heißt du?'
-    - 'Hallo, ich bin SocialBot und kann dir helfen Termine zu finden oder Veranstaltungen vorzuschlagen. Wie ist dein Name?'
+    - 'Hallo, ich bin Inca. Du kannst mich zum Beispiel nach deinen Terminen fragen. Und wer bist du?'
+    - 'Guten Tag, ich bin Inca und wie heißt du?'
+    - 'Hallo, ich bin Inca! Wie heißt du?'
+    - 'Hallo, ich bin Inca und kann dir helfen Termine zu finden oder Veranstaltungen vorzuschlagen. Wie ist dein Name?'
   utter_introduce:
-    - 'Ich bin SocialBot. Du kannst mich z. B. nach deinen Terminen fragen.'
-    - 'Ich bin SocialBot und kann dir helfen Termine zu finden oder Veranstaltungen vorzuschlagen.'
+    - 'Ich bin Inca. Du kannst mich etwa nach deinen Terminen fragen.'
+    - 'Ich bin Inca und kann dir helfen Termine zu finden oder Veranstaltungen vorzuschlagen.'
   utter_ask_howcanhelp:
-    - 'Wie kann ich dir helfen? Ich kann für die Veranstaltungen in deiner Nähe finden.'
-    - 'Was möchtest du tun? Ich kann für die nach Veranstaltungen suchen.'
+    - 'Wie kann ich dir helfen? Ich kann für die Veranstaltungen finden.'
+    - 'Was möchtest du tun?'
   utter_goodbye:
     - 'Bis später!'
     - 'Tschüss!'
   utter_ack_refuse:
-    - 'Ok auch nicht schlimm'
+    - 'Ok.'
+    - 'Geht in Ordnung.'
+    - 'Habe ich verstanden.'
   utter_ask_location:
     - 'Ok du willst ins {activity} und wo?'
     - 'Alles klar. An welchem Ort?'
-    - '{activity}. Und wo?'
   utter_ask_time:
-    - 'Wann?'
+    - 'Wann möchtest du das tun?'
     - 'An welchem Datum?'
   utter_ask_activity:
     - 'Ok du willst etwas unternehmen und was?'
@@ -78,11 +79,11 @@ templates:
   utter_confirm:
     - 'Ok habe ich gebucht.'
   utter_confirm_contact_invitation:
-    - 'Ok ich haben den Kontakt eingeladen'
+    - 'Ok ich habe den Kontakt eingeladen'
   utter_name_not_understood:
     - 'Ich habe deinen Namen leider nicht verstanden. Kannst du ihn nochmal wiederholen?'
   utter_not_understood:
-    - 'Ich habe dich leider nicht verstanden.'
+    - 'Ich habe dich leider nicht verstanden. Kannst du das wiederholen?'
 
 actions:
   - utter_greet

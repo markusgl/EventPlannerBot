@@ -1,0 +1,244 @@
+{
+  "rasa_nlu_data": {
+    "common_examples": [
+      {
+        "text": "habe ich heute termine?",
+        "intent": "find_appointment",
+        "entities": [
+          {
+            "start": 9,
+            "end": 14,
+            "value": "heute",
+            "entity": "relativedate"
+          },
+          {
+            "start": 15,
+            "end": 22,
+            "value": "termine",
+            "entity": "appointment"
+          }
+        ]
+      },
+      {
+        "text": "ich ken dich net",
+        "intent": "get_to_know",
+        "entities": []
+      },
+      {
+        "text": "ja",
+        "intent": "agree",
+        "entities": []
+      },
+      {
+        "text": "das ist korrekt",
+        "intent": "agree",
+        "entities": []
+      },
+      {
+        "text": "ja da stimmt",
+        "intent": "agree",
+        "entities": []
+      },
+      {
+        "text": "mit meiner enkelin",
+        "intent": "contact_selection",
+        "entities": [
+          {
+            "start": 11,
+            "end": 18,
+            "value": "enkelin",
+            "entity": "relationship"
+          }
+        ]
+      },
+      {
+        "text": "mit meine bruder",
+        "intent": "contact_selection",
+        "entities": [
+          {
+            "start": 10,
+            "end": 16,
+            "value": "bruder",
+            "entity": "relationship"
+          }
+        ]
+      },
+      {
+        "text": "mit meinem bruder michael",
+        "intent": "contact_selection",
+        "entities": [
+          {
+            "start": 11,
+            "end": 17,
+            "value": "bruder",
+            "entity": "relationship"
+          },
+          {
+            "start": 18,
+            "end": 25,
+            "value": "michael",
+            "entity": "firstname"
+          }
+        ]
+      },
+      {
+        "text": "nein",
+        "intent": "decline",
+        "entities": []
+      },
+      {
+        "text": "nein das ist nicht wahr",
+        "intent": "decline",
+        "entities": []
+      },
+      {
+        "text": "nein ich stimme nicht zu",
+        "intent": "decline",
+        "entities": []
+      },
+      {
+        "text": "habee ich heute termine",
+        "intent": "find_appointment",
+        "entities": [
+          {
+            "start": 10,
+            "end": 15,
+            "value": "heute",
+            "entity": "relativedate"
+          },
+          {
+            "start": 16,
+            "end": 23,
+            "value": "termine",
+            "entity": "appointment"
+          }
+        ]
+      },
+      {
+        "text": "ich würde gerne termine wissen",
+        "intent": "find_appointment",
+        "entities": [
+          {
+            "start": 16,
+            "end": 23,
+            "value": "termine",
+            "entity": "appointment"
+          }
+        ]
+      },
+      {
+        "text": "tschüss",
+        "intent": "goodbye",
+        "entities": []
+      },
+      {
+        "text": "bis dann",
+        "intent": "goodbye",
+        "entities": []
+      },
+      {
+        "text": "auf wiedersehen",
+        "intent": "goodbye",
+        "entities": []
+      },
+      {
+        "text": "ich bin markus",
+        "intent": "introduce",
+        "entities": [
+          {
+            "start": 8,
+            "end": 14,
+            "value": "markus",
+            "entity": "firstname"
+          }
+        ]
+      },
+      {
+        "text": "ich heiße max",
+        "intent": "introduce",
+        "entities": [
+          {
+            "start": 10,
+            "end": 16,
+            "value": "max",
+            "entity": "firstname"
+          }
+        ]
+      },
+      {
+        "text": "mein name ist sabrina",
+        "intent": "introduce",
+        "entities": [
+          {
+            "start": 14,
+            "end": 21,
+            "value": "sabrina",
+            "entity": "firstname"
+          }
+        ]
+      },
+      {
+        "text": "wer bist denn du",
+        "intent": "get_to_know",
+        "entities": []
+      },
+      {
+        "text": "ich will mit meiner tocher was unternehmen",
+        "intent": "search_event",
+        "entities": []
+      },
+      {
+        "text": "was läuft aktuell im kino",
+        "intent": "search_event",
+        "entities": [
+          {
+            "start": 21,
+            "end": 25,
+            "value": "kino",
+            "entity": "activity"
+          },
+          {
+            "start": 10,
+            "end": 17,
+            "value": "aktuell",
+            "entity": "relativedate"
+          }
+        ]
+      },
+      {
+        "text": "ich würde gerne in nürnberg etwas unternehmen",
+        "intent": "search_event",
+        "entities": [
+          {
+            "start": 19,
+            "end": 27,
+            "value": "nürnberg",
+            "entity": "location"
+          }
+        ]
+      },
+      {
+        "text": "was kann ich die nächste woche unternehmen",
+        "intent": "search_event",
+        "entities": [
+          {
+            "start": 13,
+            "end": 30,
+            "value": "die nächste woche",
+            "entity": "dateperiod"
+          }
+        ]
+      },
+      {
+        "text": "halloo",
+        "intent": "greet",
+        "entities": []
+      },
+      {
+        "text": "servus",
+        "intent": "greet",
+        "entities": []
+      }
+    ]
+  }
+}

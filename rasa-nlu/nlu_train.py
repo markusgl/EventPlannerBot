@@ -17,5 +17,5 @@ def test_nlu(text):
 
 
 if __name__ == '__main__':
-    #train_nlu('data/data.json', 'config_rasa-nlu.yml', 'models/rasa-nlu')
+    #train_nlu('validation_set/validation_set.json', 'config_rasa-nlu.yml', 'models/rasa-nlu')
     test_nlu(u"Ich will was unternehmen")
