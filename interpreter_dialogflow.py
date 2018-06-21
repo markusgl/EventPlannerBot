@@ -8,14 +8,14 @@ from rasa_nlu_schema import RasaNLUSchema, NLUResponse, EntitiesSchema, IntentSc
 
 class Interpreter(RasaNLUInterpreter):
 
-    def __init__(self):
+    def __init__(self, keys_file='keys.json'):
         #super(Interpreter, self)__init__()
-        with open('keys.json') as f:
+        with open(keys_file) as f:
             data = json.load(f)
         self.session_id = data['dialogflow-session-id']
         self.bearer_token = data['dialogflow-bearer-token']
 
-    def _send_api_request(self, query):
+    def send_api_request(self, query):
         """
         Sends a HTTP GET request to a published LUIS.ai app with message as URL param
         :param query: message to be handled
@@ -45,7 +45,7 @@ class Interpreter(RasaNLUInterpreter):
         :param message: message from user
         :return: dict following Rasa-NLU format
         """
-        resp = json.loads((self._send_api_request(message)))
+        resp = json.loads((self.send_api_request(message)).decode('utf-8'))
 
         nlu_response = NLUResponse()
         nlu_response.text = message

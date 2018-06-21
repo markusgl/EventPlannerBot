@@ -2,19 +2,19 @@
   "rasa_nlu_data": {
     "common_examples": [
       {
-        "text": "habe ich heute termine?",
+        "text": "habe ich Termine heute?",
         "intent": "find_appointment",
         "entities": [
           {
-            "start": 9,
-            "end": 14,
+            "start": 17,
+            "end": 22,
             "value": "heute",
             "entity": "relativedate"
           },
           {
-            "start": 15,
-            "end": 22,
-            "value": "termine",
+            "start": 9,
+            "end": 16,
+            "value": "Termine",
             "entity": "appointment"
           }
         ]
@@ -25,17 +25,17 @@
         "entities": []
       },
       {
-        "text": "ja",
+        "text": "jah",
         "intent": "agree",
         "entities": []
       },
       {
-        "text": "das ist korrekt",
+        "text": "das stimmt",
         "intent": "agree",
         "entities": []
       },
       {
-        "text": "ja da stimmt",
+        "text": "stimmt",
         "intent": "agree",
         "entities": []
       },
@@ -64,7 +64,7 @@
         ]
       },
       {
-        "text": "mit meinem bruder michael",
+        "text": "mit meinem bruder",
         "intent": "contact_selection",
         "entities": [
           {
@@ -72,12 +72,6 @@
             "end": 17,
             "value": "bruder",
             "entity": "relationship"
-          },
-          {
-            "start": 18,
-            "end": 25,
-            "value": "michael",
-            "entity": "firstname"
           }
         ]
       },
@@ -92,7 +86,7 @@
         "entities": []
       },
       {
-        "text": "nein ich stimme nicht zu",
+        "text": "nein nicht",
         "intent": "decline",
         "entities": []
       },
@@ -115,7 +109,7 @@
         ]
       },
       {
-        "text": "ich würde gerne termine wissen",
+        "text": "ich würde gerne termine für morgen haben",
         "intent": "find_appointment",
         "entities": [
           {
@@ -123,16 +117,22 @@
             "end": 23,
             "value": "termine",
             "entity": "appointment"
+          },
+          {
+            "start": 28,
+            "end": 34,
+            "value": "morgen",
+            "entity": "relativedate"
           }
         ]
       },
       {
-        "text": "tschüss",
+        "text": "tschüsss",
         "intent": "goodbye",
         "entities": []
       },
       {
-        "text": "bis dann",
+        "text": "bis demnächst",
         "intent": "goodbye",
         "entities": []
       },
@@ -188,25 +188,25 @@
         "entities": []
       },
       {
-        "text": "was läuft aktuell im kino",
+        "text": "welche Filme laufen aktuell im kino",
         "intent": "search_event",
         "entities": [
           {
-            "start": 21,
-            "end": 25,
+            "start": 31,
+            "end": 35,
             "value": "kino",
             "entity": "activity"
           },
           {
-            "start": 10,
-            "end": 17,
+            "start": 20,
+            "end": 27,
             "value": "aktuell",
             "entity": "relativedate"
           }
         ]
       },
       {
-        "text": "ich würde gerne in nürnberg etwas unternehmen",
+        "text": "ich würde gerne in nürnberg was besuchen",
         "intent": "search_event",
         "entities": [
           {
@@ -218,7 +218,7 @@
         ]
       },
       {
-        "text": "was kann ich die nächste woche unternehmen",
+        "text": "was kann ich die nächste woche machen",
         "intent": "search_event",
         "entities": [
           {
@@ -235,9 +235,160 @@
         "entities": []
       },
       {
-        "text": "servus",
+        "text": "morgen",
         "intent": "greet",
         "entities": []
+      },
+      {
+        "text": "meine termine?",
+        "intent": "find_appointment",
+        "entities": [
+          {
+            "start": 6,
+            "end": 13,
+            "value": "termine",
+            "entity": "appointment"
+          }
+        ]
+      },
+      {
+        "text": "habe ich heute etwas vor",
+        "intent": "find_appointment",
+        "entities": [
+          {
+            "start": 9,
+            "end": 14,
+            "value": "heute",
+            "entity": "relativedate"
+          }
+        ]
+      },
+      {
+        "text": "hallo roboter",
+        "intent": "greet",
+        "entities": []
+      },
+      {
+        "text": "hallo careina",
+        "intent": "greet",
+        "entities": []
+      },
+      {
+        "text": "bis zum nächsten mal",
+        "intent": "goodbye",
+        "entities": []
+      },
+      {
+        "text": "bis die tage",
+        "intent": "goodbye",
+        "entities": []
+      },
+      {
+        "text": "korrekt",
+        "intent": "agree",
+        "entities": []
+      },
+      {
+        "text": "jawohl",
+        "intent": "agree",
+        "entities": []
+      },
+      {
+        "text": "niemals",
+        "intent": "decline",
+        "entities": []
+      },
+      {
+        "text": "falsch",
+        "intent": "decline",
+        "entities": []
+      },
+      {
+        "text": "was machst du",
+        "intent": "get_to_know",
+        "entities": []
+      },
+      {
+        "text": "was willst du hier",
+        "intent": "get_to_know",
+        "entities": []
+      },
+      {
+        "text": "ich kenne dich nicht",
+        "intent": "get_to_know",
+        "entities": []
+      },
+      {
+        "text": "mit daniela",
+        "intent": "contact_selection",
+        "entities": [
+          {
+            "start": 4,
+            "end": 11,
+            "value": "daniela",
+            "entity": "firstname"
+          }
+        ]
+      },
+      {
+        "text": "elfriede soll mit",
+        "intent": "contact_selection",
+        "entities": [
+          {
+            "start": 0,
+            "end": 8,
+            "value": "elfriede",
+            "entity": "firstname"
+          }
+        ]
+      },
+      {
+        "text": "elfriede",
+        "intent": "introduce",
+        "entities": [
+          {
+            "start": 0,
+            "end": 8,
+            "value": "elfriede",
+            "entity": "firstname"
+          }
+        ]
+      },
+      {
+        "text": "der sepp bin ich",
+        "intent": "introduce",
+        "entities": [
+          {
+            "start": 4,
+            "end": 8,
+            "value": "sepp",
+            "entity": "firstname"
+          }
+        ]
+      },
+      {
+        "text": "alle nennen mich hans",
+        "intent": "introduce",
+        "entities": [
+          {
+            "start": 17,
+            "end": 21,
+            "value": "hans",
+            "entity": "firstname"
+          }
+        ]
+      },
+      {
+        "text": "was kann man denn heute tun",
+        "intent": "search_event",
+        "entities": [
+          {
+            "start": 18,
+            "end": 23,
+            "value": "heute",
+            "entity": "relativedate"
+          }
+        ]
       }
     ]
   }
