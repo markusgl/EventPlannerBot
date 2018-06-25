@@ -29,7 +29,6 @@ class KnowledgeGraph:
         password = data['password']
         self.graph = Graph(host="localhost", username=username, password=password)
 
-
     def add_me(self, username):
         """
         Pushes a new central user 'Me' to the graph
@@ -75,31 +74,26 @@ class KnowledgeGraph:
 
         relationship = relationships[relationship]
 
-        if relationship == 'friend':
+        if relationship == 'freund':
             me.friend.add(contact)
             contact.friend.add(me)
-        elif relationship == 'brother':
+        elif relationship == 'bruder':
             me.brother.add(contact)
             contact.brother.add(me)
-        elif relationship == 'sister':
+        elif relationship == 'schwester':
             me.sister.add(contact)
             contact.sister.add(me)
-
-        # TODO needs property gender from central user
-        """
-        elif relationship == 'mother':
+        elif relationship == 'mutter':
             me.mother.add(contact)
             
-        elif relationship == 'father':
+        elif relationship == 'vater':
             me.father.add(contact)
-            #TODO
-        elif relationship == 'son':
+        elif relationship == 'sohn':
             me.son.add(contact)
-            #TODO
-        elif relationship == 'daughter':
+        elif relationship == 'tocher':
             me.daughter.add(contact)
             #TODO
-        """
+
 
         self.graph.push(me)
 

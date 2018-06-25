@@ -19,8 +19,8 @@ logger = logging.getLogger(__name__)
 
 
 def run_eventbot_online(input_channel, interpreter,
-                        domain_file="./validation_set/domain.yml",
-                        training_data_file='./validation_set/stories'):
+                        domain_file="./data/domain.yml",
+                        training_data_file='./data/stories'):
     try:
         KnowledgeGraph()
     except ServiceUnavailable:
@@ -28,7 +28,7 @@ def run_eventbot_online(input_channel, interpreter,
         return
 
     fallback = FallbackPolicy(fallback_action_name="utter_not_understood",
-                              core_threshold=0.6, nlu_threshold=0.6)
+                              core_threshold=0.3, nlu_threshold=0.6)
     agent = Agent(domain_file,
                   policies=[MemoizationPolicy(), KerasPolicy(), fallback],
                   interpreter=interpreter)

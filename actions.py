@@ -17,10 +17,8 @@ from oauth2client import file, client, tools
 
 import logging
 
-class ActionSearchContact(Action):
-    #def required_fields(self):
-    #    return[]
 
+class ActionSearchContact(Action):
     def name(self):
         return 'action_search_contact'
 
@@ -37,17 +35,17 @@ class ActionSearchContact(Action):
                 dispatcher.utter_message("Ich kenne " + str(contact_name).title() + " nicht. Willst du mir sagen wer das ist?")
             else:
                 SlotSet("relationship", relationship)
-                dispatcher.utter_message("Deine(n) "+relationship+" "+contact_name+"?")
+                dispatcher.utter_message("Deine(n) " + relationship + " " + str(contact_name).title() +"?")
 
         # search contact name by given relationship
         elif me_name and relation_ship:
-            contact = kg.search_contactname_by_relationship(relation_ship)
+            contact = kg.search_contactname_by_relationship(me_name, relation_ship)
             if contact is None:
                 if relation_ship == "vater" or relation_ship == "bruder" or relation_ship == "onkel":
-                    dispatcher.utter_message("Ich kenne deinen " + str(relation_ship) + " leider nicht. "
+                    dispatcher.utter_message("Ich kenne deinen " + str(relation_ship).title() + " leider nicht. "
                                                                                    "Willst du mir sagen wie er heißt?")
                 elif relation_ship == "mutter" or relation_ship == "schwester" or relation_ship == "tante":
-                    dispatcher.utter_message("Ich kenne deine " + str(relation_ship) + " leider."
+                    dispatcher.utter_message("Ich kenne deine " + str(relation_ship).title() + " leider."
                                                                                   "Willst du mir sagen wie sie heißt?")
                 else:
                     dispatcher.utter_message("Ich kenne " + str(relation_ship) + " nicht.")
@@ -75,10 +73,11 @@ class ActionAddContact(Action):
         relationship = tracker.get_slot('relationship')
 
         if me_name and contactname and relationship:
+            print("try to add contact")
             kg.add_contact(me_name, contactname, relationship)
             dispatcher.utter_message("Danke, jetzt kenne ich auch " + str(contactname).title() + "!")
         else:
-            dispatcher.utter_message("Ich habe die Namen leider nicht verstanden. Willst du mir sie nochmal sagen?")
+            dispatcher.utter_message("Ich habe deinen Kontakt und die Beziehung leider nicht verstanden. Willst du mir sie nochmal sagen?")
 
 
 class ActionSearchMe(Action):
@@ -94,11 +93,10 @@ class ActionSearchMe(Action):
                 dispatcher.utter_message("Der Name " + me_name.title() + " kommt mir bekannt vor! Kennen wir uns bereits?")
             else:
                 #ActionAddMe.run(dispatcher, tracker, domain)
-
                 kg.add_me(me_name)
                 dispatcher.utter_message("Hallo " + me_name.title() + "! Schön von dir zu hören.")
 
-        return [SlotSet('me_name', me_name)]
+        return [SlotSet('me_name', me_name), SlotSet('firstname', None)]
 
 
 class ActionAddMe(Action):
@@ -110,12 +108,13 @@ class ActionAddMe(Action):
 
     def run(self, dispatcher, tracker, domain):
         kg = KnowledgeGraph()
-        me_name = tracker.get_slot('firstname')
+        me_name = tracker.get_slot('me_name')
 
-        kg.add_me(me_name)
-        dispatcher.utter_message("Hallo " + me_name.title() + "! Schön von dir zu hören.")
+        if me_name:
+            kg.add_me(me_name)
+            dispatcher.utter_message("Hallo " + str(me_name).title() + "! Schön von dir zu hören.")
 
-        return [SlotSet('me_name', me_name)]
+        return [SlotSet('me_name', me_name), SlotSet('firstname', None)]
 
 
 class ActionSearchEvents(Action):

@@ -1,5 +1,6 @@
 from interpreter_luis import Interpreter as LuisInterpreter
 from interpreter_dialogflow import Interpreter as DialogflowInterpreter
+from interpreter_witai import Interpreter as WitInterpreter
 from rasa_nlu.model import Interpreter
 import json
 import time
@@ -23,7 +24,7 @@ def evaluate_scores(tp_scores, fp_scores):
 
         tpr = round((tp_score / (tp_score + fp_score)), 2)
         tpr_sum.append(tpr)
-        print("True positve rate for intent '{}': {}".format(intent, tpr * 100))
+        print("True positve rate (precision) for intent '{}': {}".format(intent, tpr * 100))
 
     print("Average score: {}".format((round(sum(tpr_sum)/len(tpr_sum), 2))))
 
@@ -117,9 +118,6 @@ def evaluate_dialogflow():
     confidence_scores = []
     duration = []
     for example in examples:
-        #print("Intent: " + example['intent'])
-        #print("Utterance: " + example['text'])
-
         intent = example['intent']
         utterance = example['text']
 
@@ -150,13 +148,56 @@ def evaluate_dialogflow():
             else:
                 fp_scores[example['intent']] = 1
 
-
     print("Average request duration: {}".format(round(sum(duration)/len(duration), 2)))
     print("Average confidence score: {}".format(round(sum(confidence_scores)/len(confidence_scores), 2)))
     evaluate_scores(tp_scores, fp_scores)
 
 
+def evaluate_witai():
+    interpreter = WitInterpreter()
+    examples = extract_validation_set()
+
+    tp_scores = {}
+    fp_scores = {}
+    confidence_scores = []
+    duration = []
+    for example in examples:
+        intent = example['intent']
+        utterance = example['text']
+
+        start_time = time.time()
+        resp = interpreter.parse(utterance)
+        duration.append(round(time.time() - start_time, 2))
+        print(resp)
+        if resp["intent"]["name"] and resp["intent"]["confidence"]:
+            resp_intent = resp["intent"]["name"]
+            resp_conf_score = resp["intent"]["confidence"]
+
+            if resp_intent == intent:
+                if example['intent'] in tp_scores.keys():
+                    tp_scores[example['intent']] += 1
+                else:
+                    tp_scores[example['intent']] = 1
+
+                confidence_scores.append(resp_conf_score)
+            else:
+                if example['intent'] in fp_scores.keys():
+                    fp_scores[example['intent']] += 1
+                else:
+                    fp_scores[example['intent']] = 1
+
+        else:
+            if example['intent'] in fp_scores.keys():
+                fp_scores[example['intent']] += 1
+            else:
+                fp_scores[example['intent']] = 1
+
+    print("Average request duration: {}".format(round(sum(duration)/len(duration), 2)))
+    print("Average confidence score: {}".format(round(sum(confidence_scores)/len(confidence_scores), 2)))
+    evaluate_scores(tp_scores, fp_scores)
+
 if __name__ == '__main__':
     #evaluate_rasa_nlu()
     #evaluate_luis()
     evaluate_dialogflow()
+    #evaluate_witai()

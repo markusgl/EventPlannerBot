@@ -46,16 +46,16 @@ entities:
 
 templates:
   utter_greet:
-    - 'Hallo, ich bin Inca. Du kannst mich zum Beispiel nach deinen Terminen fragen. Und wer bist du?'
-    - 'Guten Tag, ich bin Inca und wie heißt du?'
-    - 'Hallo, ich bin Inca! Wie heißt du?'
-    - 'Hallo, ich bin Inca und kann dir helfen Termine zu finden oder Veranstaltungen vorzuschlagen. Wie ist dein Name?'
+    - 'Hallo, ich bin Careina. Du kannst mich zum Beispiel nach deinen Terminen fragen. Und wer bist du?'
+    - 'Guten Tag, ich bin Careina und wie heißt du?'
+    - 'Hallo, ich bin Careina! Wie heißt du?'
+    - 'Hallo, ich bin Careina und kann dir helfen Termine zu finden oder Veranstaltungen vorzuschlagen. Wie ist dein Name?'
   utter_introduce:
-    - 'Ich bin Inca. Du kannst mich etwa nach deinen Terminen fragen.'
-    - 'Ich bin Inca und kann dir helfen Termine zu finden oder Veranstaltungen vorzuschlagen.'
+    - 'Ich bin Careina. Du kannst mich etwa nach deinen Terminen fragen.'
+    - 'Ich bin Careina und kann dir helfen Termine zu finden oder Veranstaltungen vorzuschlagen.'
   utter_ask_howcanhelp:
-    - 'Wie kann ich dir helfen? Ich kann für die Veranstaltungen finden.'
-    - 'Was möchtest du tun?'
+    - 'Wie kann ich dir helfen? Ich kann für dich Veranstaltungen oder deine Termine finden.'
+    - 'Was möchtest du tun? Ich kann dir etwa deine Termine sagen oder Veranstaltungen vorschlagen.'
   utter_goodbye:
     - 'Bis später!'
     - 'Tschüss!'
@@ -67,8 +67,8 @@ templates:
     - 'Ok du willst ins {activity} und wo?'
     - 'Alles klar. An welchem Ort?'
   utter_ask_time:
-    - 'Wann möchtest du das tun?'
-    - 'An welchem Datum?'
+    - 'Wann möchtest du deine Unternehmung {activity} machen?'
+    - 'An welchem Datum möchtest du deine Aktivität tun?'
   utter_ask_activity:
     - 'Ok du willst etwas unternehmen und was?'
     - 'Was würdest du gerne machen? Kino, Theater oder etwas anderes?'

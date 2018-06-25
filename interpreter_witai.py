@@ -1,19 +1,17 @@
-""" NLU using Dialogflow (formerly API.ai) and maps it for Rasa dialogue management"""
+""" NLU using wit.ai and maps it for Rasa dialogue management"""
 
 from rasa_core.interpreter import RasaNLUInterpreter
 import requests
 import json
+import re
 from rasa_nlu_schema import RasaNLUSchema, NLUResponse, EntitiesSchema, IntentSchema
-
 
 class Interpreter(RasaNLUInterpreter):
 
     def __init__(self, keys_file='keys.json'):
-        #super(Interpreter, self)__init__()
         with open(keys_file) as f:
             data = json.load(f)
-        self.session_id = data['dialogflow-session-id']
-        self.bearer_token = data['dialogflow-bearer-token']
+        self.bearer_token = data['witai-bearer-token']
 
     def send_api_request(self, query):
         """
@@ -21,21 +19,17 @@ class Interpreter(RasaNLUInterpreter):
         :param query: message to be handled
         :return: JSON response from LUIS.ai
         """
-        #encoded_query = quote(query)
 
-        params = {"v": "20170712",
-                  "query": query,
-                  "lang": "de",
-                  "sessionId": self.session_id,
-                  "timezone": "Europe/Berlin"
+        params = {"v": "20180625",
+                  "q": query
                   }
         headers = {"Authorization": self.bearer_token}
 
         response = requests.get(
-            "https://api.dialogflow.com/v1/query",
+            "https://api.wit.ai/message",
             params=params, headers=headers)
-        #print(response.url)
-        #print("Dialogflow response: %s" % response.content)
+
+        print("wit.ai response: %s" % response.content)
 
         return response.content
 
@@ -50,35 +44,46 @@ class Interpreter(RasaNLUInterpreter):
         nlu_response = NLUResponse()
         nlu_response.text = message
         intent_schema = IntentSchema()
-        if resp["result"]["metadata"]:
-            intent_schema.name = resp["result"]["metadata"]["intentName"]
-            intent_schema.confidence = resp["result"]["score"]
-        nlu_response.intent = intent_schema
+        if 'intent' in resp["entities"]:
+            intent_schema.name = resp["entities"]["intent"][0]["value"]
+            intent_schema.confidence = resp["entities"]["intent"][0]["confidence"]
+        else:
+            intent_schema.name = ''
+            intent_schema.confidence = ''
 
+        nlu_response.intent = intent_schema
+        print(intent_schema.name)
+
+        # TODO entity extraction
+        """
         try:
-            entities = resp["result"]["parameters"]
-            resolved_query = resp["result"]["resolvedQuery"]
+            entities = resp["entities"]
+            query = resp["_text"]
 
             nlu_response.entities = []
             for key, value in entities.items():
-                if value:
+                if not value == 'intent':
                     entity_schema = EntitiesSchema()
-                    entity_schema.start = resolved_query.find(value)
-                    entity_schema.end = resolved_query.find(value) + len(value)
-                    entity_schema.entity = key
-                    entity_schema.value = value
+                    entity_value = value['value']
+
+                    a = re.search(r'\b('+entity_value+')\b', query)
+                    print(a.start())
+                    #entity_schema.start =
+                    #entity_schema.end = resolved_query.find(value) + len(value)
+                    #entity_schema.entity = key
+                    #entity_schema.value = value
                     nlu_response.entities.append(entity_schema)
                     print("Key: {}, Value: {}".format(key, value))
         except Exception as err:
             print(err)
             print("Decoding failed")
+        """
 
         schema = RasaNLUSchema()
         data, error = schema.dump(nlu_response)
 
         return data
 
-
 #interpreter = Interpreter()
-#interpreter.parse("Ich würde heute gerne ins Kino gehen?")
-#interpreter.parse("Wie wird das Wetter in Berlin heute?")
+#data = interpreter.parse("Ich würde heute gerne ins Kino gehen")
+#print(data)
