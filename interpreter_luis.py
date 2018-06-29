@@ -72,5 +72,6 @@ class Interpreter(RasaNLUInterpreter):
 
         return data
 
-#interpreter = Interpreter()
-#interpreter.parse("Ich würde heute gerne ins Kino gehen?")
+interpreter = Interpreter()
+data = interpreter.parse("Ich würde heute gerne ins Kino gehen?")
+print(data)

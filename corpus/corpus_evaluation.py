@@ -4,7 +4,8 @@ from interpreter_witai import Interpreter as WitInterpreter
 from rasa_nlu.model import Interpreter
 import json
 import time
-
+import matplotlib.pyplot as plt
+import numpy as np
 
 def extract_validation_set():
     with open("../corpus/validation_set/data.json", "r", encoding='utf-8') as f:
@@ -12,10 +13,27 @@ def extract_validation_set():
 
     return data["rasa_nlu_data"]["common_examples"]
 
+def plot_scores(intents, tpr_sum, title, save=False):
+    print("intents {}".format(intents))
+    print("sums {}".format(tpr_sum))
+
+    y_pos = np.arange(len(intents))
+    plt.bar(y_pos, tpr_sum, align='center')
+    plt.xlabel('Intents')
+    plt.ylabel('Confidence')
+    plt.title('Ergebnisse ' + title)
+    plt.xticks(y_pos, intents, rotation=50)
+    plt.yticks()
+    if save:
+        plt.savefig(title + '.png', format='png')
+
+    plt.show()
+
 
 def evaluate_scores(tp_scores, fp_scores):
     # evaluate scores
     tpr_sum = []
+    intents = []
     for intent, tp_score in tp_scores.items():
         if intent in fp_scores.keys():
             fp_score = fp_scores[intent]
@@ -23,9 +41,11 @@ def evaluate_scores(tp_scores, fp_scores):
             fp_score = 0
 
         tpr = round((tp_score / (tp_score + fp_score)), 2)
+        intents.append(intent)
         tpr_sum.append(tpr)
         print("True positve rate (precision) for intent '{}': {}".format(intent, tpr * 100))
 
+    plot_scores(intents, tpr_sum)
     print("Average score: {}".format((round(sum(tpr_sum)/len(tpr_sum), 2))))
 
 
@@ -199,5 +219,25 @@ def evaluate_witai():
 if __name__ == '__main__':
     #evaluate_rasa_nlu()
     #evaluate_luis()
-    evaluate_dialogflow()
+    #evaluate_dialogflow()
     #evaluate_witai()
+    intents = ['LUIS.ai', 'Dialogflow', 'wit.ai', 'Rasa-NLU']
+    scores = [0.76, 0.74, 0.35, 0.71]
+    req_dur = [0.75, 0.28, 0.68, 0.01]
+    avg_conf = [0.63, 0.78, 0.99, 0.49]
+    #plot_scores(intents, scores, 'im Vergleich', save=True)
+
+    X = np.arange(len(intents))
+    y_pos = np.arange(len(intents))
+    score_bar = plt.bar(X + 0.10, scores, width=0.25, color='b')
+    req_dur_bar = plt.bar(X + 0.35, req_dur, width=0.25, color='r')
+    avg_conf_bar = plt.bar(X + 0.60, avg_conf, width=0.25, color='g')
+    plt.xlabel('NLU-Systeme')
+    #plt.ylabel('Vorkommen in Prozent')
+    plt.title('Ergebnisse')
+    # plt.set_xticks(X + 0.25 / 2)
+    plt.xticks(X + 0.25 / 2, intents)
+    #plt.ylim([0, 100])
+    plt.legend((score_bar[0], req_dur_bar[0], avg_conf_bar[0]), ('Conf. score', 'Request time', 'Average conf.'), loc='upper right')
+    plt.savefig('Results_full.png', format='png')
+    plt.show()
